@@ -16,6 +16,8 @@ defmodule Breadboard.GPIO.BaseGPIO do
 
       def label_to_pin(label, mode \\ :sysfs)
 
+      def label_to_pin(label, :stub), do: label_to_pin(label, :sysfs)
+
       def label_to_pin(label, mode) do
         search_pin(label, mode)
       end

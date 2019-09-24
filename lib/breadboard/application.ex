@@ -7,6 +7,10 @@ defmodule Breadboard.Application do
 
   def start(_type, _args) do
     children = [
+      %{
+        id: Breadboard.GPIO.PinoutServer,
+        start: {Breadboard.GPIO.PinoutServer, :start_link, []}
+      }
       # Starts a worker by calling: Breadboard.Worker.start_link(arg)
       # {Breadboard.Worker, arg}
     ]

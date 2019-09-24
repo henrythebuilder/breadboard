@@ -13,8 +13,16 @@ defmodule Breadboard.GPIO.Utils do
   end
 
   def get_platform() do
-    get_env_variable("BREADBOARD_PLATFORM")
+    get_env_variable("BREADBOARD_PLATFORM", "stub")
     |> String.downcase()
     |> String.to_atom()
   end
+
+  def gpio_info_name() do
+    (get_env_variable("BREADBOARD_GPIO_INFO_NAME") || Circuits.GPIO.info.name)
+    |> to_string()
+    |> String.downcase()
+    |> String.to_atom()
+  end
+
 end
