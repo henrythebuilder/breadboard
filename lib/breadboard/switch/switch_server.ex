@@ -16,13 +16,17 @@ defmodule Breadboard.Switch.SwitchServer do
 
   def init(init_arg) do
     Process.flag(:trap_exit, true)
-    pin = Pinout.label_to_pin(init_arg[:pin])
-    mode = init_arg[:mode]
-    {:ok, gpio} = Circuits.GPIO.open(pin, mode)
-    state = %{gpio_pin: pin,
-              gpio: gpio}
-    Logger.info("Switch server started (#{inspect(self())}) on pin '#{inspect(init_arg[:pin])}' as '#{inspect(pin)}', mode '#{inspect(mode)}', server state: '#{inspect(state)}'")
+    {:ok, gpio} = open_gpio_pin(init_arg)
+    state = %{init_arg: init_arg, gpio: gpio}
+    Logger.info("SwitchServer started (#{inspect(self())}) with state: '#{inspect(state)}'")
     {:ok, state}
+  end
+
+  defp open_gpio_pin(init_arg) do
+    pin = Pinout.label_to_pin(init_arg[:pin])
+    open_gpio = Circuits.GPIO.open(pin, init_arg[:direction], Keyword.take(init_arg, [:initial_value]) )
+    Logger.info("SwitchServer open GPIO #{inspect(pin)} with result: '#{inspect(open_gpio)}'")
+    open_gpio
   end
 
   def handle_call(:turn_on, _from, state) do
@@ -44,6 +48,7 @@ defmodule Breadboard.Switch.SwitchServer do
   end
 
   def terminate(reason, state) do
+    Circuits.GPIO.close(state[:gpio])
     Logger.info("Switch server terminate: reason='#{inspect(reason)}', state='#{inspect(state)}'")
     state
   end
