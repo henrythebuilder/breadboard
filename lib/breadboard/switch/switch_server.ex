@@ -49,7 +49,7 @@ defmodule Breadboard.Switch.SwitchServer do
 
   def terminate(reason, state) do
     Circuits.GPIO.close(state[:gpio])
-    Logger.info("Switch server terminate: reason='#{inspect(reason)}', state='#{inspect(state)}'")
+    Logger.info("SwitchServer terminate: reason='#{inspect(reason)}', state='#{inspect(state)}'")
     state
   end
 
