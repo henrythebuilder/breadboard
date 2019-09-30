@@ -1,5 +1,5 @@
 defmodule PinoutHelpTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   alias Breadboard.GPIO.PinoutHelp
 

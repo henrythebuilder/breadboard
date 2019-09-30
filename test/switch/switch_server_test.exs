@@ -1,7 +1,11 @@
 defmodule SwitchServerTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   alias Breadboard.Switch.SwitchServer
+
+  setup_all do
+    Breadboard.set_platform(:stub)
+  end
 
   test "initial value 0" do
     {:ok, pid} = SwitchServer.start_link([pin: :gpio1, direction: :output, initial_value: 0])
