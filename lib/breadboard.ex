@@ -1,18 +1,20 @@
 defmodule Breadboard do
-  @moduledoc """
-  Documentation for Breadboard.
-  """
+    @moduledoc false
 
-  @doc """
-  Hello world.
+  # @moduledoc """
+  # Documentation for Breadboard.
+  # """
 
-  ## Examples
+  # @doc """
+  # Hello world.
 
-      iex> Breadboard.hello()
-      :world
+  # ## Examples
 
-  """
-  def hello do
-    :world
-  end
+  #     iex> Breadboard.hello()
+  #     :world
+
+  # """
+  # def hello do
+  #   :world
+  # end
 end

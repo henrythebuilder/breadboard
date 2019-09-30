@@ -1,4 +1,5 @@
 defmodule Breadboard.GPIO.Utils do
+  @moduledoc false
 
   def to_pin_key(prefix, n) do
     "#{prefix}#{n}" |> to_key_label

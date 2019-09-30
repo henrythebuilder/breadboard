@@ -6,26 +6,24 @@ defmodule Breadboard.Switch do
 
   ## Examples (for the default 'stub' reference)
 
-  iex> {:ok, switch} = Breadboard.Switch.connect([pin: :gpio18, direction: :output])
-  iex> Breadboard.Switch.turn_on(switch)
-  :ok
-  iex> Breadboard.Switch.get_value(switch)
-  1
+      iex> {:ok, switch} = Breadboard.Switch.connect([pin: :gpio18, direction: :output])
+      iex> Breadboard.Switch.turn_on(switch)
+      :ok
+      iex> Breadboard.Switch.get_value(switch)
+      1
 
-  # switch with initial value
-  iex> {:ok, switch1} = Breadboard.Switch.connect([pin: :gpio18, direction: :output, initial_value: 1])
-  iex> {:ok, switch0} = Breadboard.Switch.connect([pin: "GPIO9", direction: :output, initial_value: 0])
-  iex> Breadboard.Switch.get_value(switch0)
-  0
-  iex> Breadboard.Switch.get_value(switch1)
-  1
+  ### switch with initial value
+      iex> {:ok, switch1} = Breadboard.Switch.connect([pin: :gpio18, direction: :output, initial_value: 1])
+      iex> {:ok, switch0} = Breadboard.Switch.connect([pin: "GPIO9", direction: :output, initial_value: 0])
+      iex> Breadboard.Switch.get_value(switch0)
+      0
+      iex> Breadboard.Switch.get_value(switch1)
+      1
 
-  # turn_on/off an only input pin will terminate the switch
+  ### turn_on/off an only input pin will terminate the switch
 
   """
 
-
-  alias Breadboard.Switch.SwitchServer
 
   @doc """
   Connect to a pin.
