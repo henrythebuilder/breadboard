@@ -1,8 +1,6 @@
 defmodule PinoutTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
-  if(Breadboard.GPIO.Utils.get_platform()==:stub) do
-    doctest Breadboard.Pinout
-  end
+  doctest Breadboard.Pinout
 
 end

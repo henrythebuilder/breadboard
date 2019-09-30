@@ -1,8 +1,6 @@
 defmodule SwitchTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
-  if(Breadboard.GPIO.Utils.get_platform()==:stub) do
-    doctest Breadboard.Switch
-  end
+  doctest Breadboard.Switch
 
 end

@@ -9,21 +9,24 @@ defmodule Breadboard.GPIO.Utils do
     label |> to_string |> String.downcase |> String.to_atom
   end
 
-  def get_env_variable(key, default \\ nil) do
-    System.get_env(to_string(key), default)
-  end
-
   def get_platform() do
-    get_env_variable("BREADBOARD_PLATFORM", "stub")
-    |> String.downcase()
-    |> String.to_atom()
+    get_env("breadboard_platform", :stub)
+    |> to_key_label
   end
 
   def gpio_info_name() do
-    (get_env_variable("BREADBOARD_GPIO_INFO_NAME") || Circuits.GPIO.info.name)
-    |> to_string()
-    |> String.downcase()
-    |> String.to_atom()
+    (get_env("breadboard_gpio_info_name", Circuits.GPIO.info.name))
+    |> to_key_label
   end
+
+  defp get_env(key,  default \\ nil) do
+    Application.get_env(:breadboard, key) ||
+      System.get_env(to_string(key)) ||
+        default
+  end
+
+  # defp get_system_env(key, default \\ nil) do
+  #   System.get_env(to_string(key), default)
+  # end
 
 end

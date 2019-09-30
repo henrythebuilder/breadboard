@@ -15,8 +15,7 @@ defmodule Breadboard.GPIO.PinoutServer do
   end
 
   def init(_) do
-    state = %{gpio_info_name: Breadboard.GPIO.Utils.gpio_info_name(),
-             platform: Breadboard.GPIO.Utils.get_platform()}
+    state = load_state()
     Logger.info("PinoutServer started (#{inspect(self())}) with state: '#{inspect state}'")
     {:ok, state}
   end
@@ -31,4 +30,14 @@ defmodule Breadboard.GPIO.PinoutServer do
     { :reply, label, state }
   end
 
+  def handle_call({:reload_state}, _from, state) do
+    new_state = load_state()
+    Logger.info("PinoutServer state updated from: '#{inspect state}' to '#{inspect new_state}'")
+    {:reply, :ok, new_state}
+  end
+
+  defp load_state() do
+    %{gpio_info_name: Breadboard.GPIO.Utils.gpio_info_name(),
+       platform: Breadboard.GPIO.Utils.get_platform()}
+  end
 end

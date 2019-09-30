@@ -1,5 +1,5 @@
 defmodule SwitchServerTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   alias Breadboard.Switch.SwitchServer
 

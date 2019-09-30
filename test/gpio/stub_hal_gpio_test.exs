@@ -1,5 +1,5 @@
 defmodule StubHalGPIOTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   alias Breadboard.GPIO.StubHalGPIO
 

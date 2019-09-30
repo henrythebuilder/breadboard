@@ -19,22 +19,26 @@ defmodule Breadboard.Pinout do
   Returns the real pin number.
 
   ## Example for Allwinner platform calling 'Breadboard.Pinout.label_to_pin' with "PG8", :pg8, 32 the value returne is always 200 (the real reference for sysfs number)
-      Breadboard.Pinout.label_to_pin("PG8") >> 200
-      Breadboard.Pinout.label_to_pin(:pg8) >> 200
-      Breadboard.Pinout.label_to_pin("")
-      Breadboard.Pinout.label_to_pin("")
+
+      iex> Breadboard.set_platform(:sunxi)
+      iex> Breadboard.Pinout.label_to_pin("PG8")
+      200
+      iex> Breadboard.Pinout.label_to_pin(:pg8)
+      200
+      iex> Breadboard.Pinout.label_to_pin(32)
+      200
+      iex> Breadboard.Pinout.label_to_pin(:pin32)
+      200
 
   ## Examples (for the default 'stub' reference)
 
+      iex> Breadboard.set_platform(:stub)
       iex> Breadboard.Pinout.label_to_pin("GPIO18")
       18
-
       iex> Breadboard.Pinout.label_to_pin(:gpio18)
       18
-
       iex> Breadboard.Pinout.label_to_pin(18)
       18
-
       iex> Breadboard.Pinout.label_to_pin(:pin18)
       18
 
@@ -50,9 +54,9 @@ defmodule Breadboard.Pinout do
 
   ## Examples (for the default 'stub' reference)
 
+      iex> Breadboard.set_platform(:stub)
       iex> Breadboard.Pinout.pin_to_label(:pin18)
       :gpio18
-
       iex> Breadboard.Pinout.pin_to_label(18)
       :gpio18
 
