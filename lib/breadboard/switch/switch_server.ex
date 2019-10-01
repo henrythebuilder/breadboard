@@ -17,7 +17,7 @@ defmodule Breadboard.Switch.SwitchServer do
   def init(init_arg) do
     Process.flag(:trap_exit, true)
     {:ok, gpio} = open_gpio_pin(init_arg)
-    state = %{init_arg: init_arg, gpio: gpio}
+    state = %{init_arg: init_arg, gpio: gpio, pin_label: Pinout.pin_to_label(init_arg[:pin]) }
     Logger.info("SwitchServer started (#{inspect(self())}) with state: '#{inspect(state)}'")
     {:ok, state}
   end
@@ -45,6 +45,21 @@ defmodule Breadboard.Switch.SwitchServer do
     {:reply,
      Circuits.GPIO.read(state[:gpio]),
      state}
+  end
+
+  def handle_call({:set_interrupts, irq_opts}, _from, state) do
+    Circuits.GPIO.set_interrupts(state[:gpio],
+                                 Keyword.get(irq_opts, :trigger, :both),
+                                 Keyword.get(irq_opts, :opts, []))
+    {:reply,
+     :ok,
+     Map.put(state, :interrupts_module, Keyword.get(irq_opts, :module, nil))}
+  end
+
+  def handle_info({:circuits_gpio, pin_number, timestamp, value}, state) do
+    args = [%Breadboard.IRQInfo{pin_number: pin_number, timestamp: timestamp, new_value: value, pin_label: state.pin_label}]
+    apply(state.interrupts_module, :interrupt_service_routine, args)
+    {:noreply, state}
   end
 
   def terminate(reason, state) do
