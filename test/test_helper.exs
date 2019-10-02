@@ -2,12 +2,12 @@ defmodule TestConfig do
   def exclude_test() do
     case Breadboard.GPIO.Utils.get_platform() do
       :stub ->
-        [:sunxi_test]
+        [:platform_sunxi]
       :sunxi ->
-        [:stub_test]
+        [:platform_stub]
       _ ->
         IO.warn("Breadboarding platform undefined !!!")
-        [:stub_test, :sunxi_test]
+        [:platform_stub, :platform_sunxi]
     end
   end
 end

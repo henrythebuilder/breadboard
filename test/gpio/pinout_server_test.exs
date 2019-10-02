@@ -7,13 +7,13 @@ defmodule PinoutServerTest do
     assert Process.whereis(PinoutServer.server_name() ) != nil
   end
 
-  @tag stub_test: true
+  @tag platform_stub: true
   test "simple 'stub' call" do
     assert GenServer.call(PinoutServer.server_name(), {:label_to_pin, :gpio18}) == 18
 
   end
 
-  @tag sunxi_test: true
+  @tag platform_sunxi: true
   test "simple 'sunxi' call" do
     assert GenServer.call(PinoutServer.server_name(), {:label_to_pin, :pa1}) == 1
   end
