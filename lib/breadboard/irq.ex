@@ -25,6 +25,8 @@ defmodule Breadboard.IRQ do
 
       @behaviour Breadboard.IRQ
 
+      alias Breadboard.{IRQ, IRQInfo}
+
     end
 
   end
