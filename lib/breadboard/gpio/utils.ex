@@ -10,23 +10,24 @@ defmodule Breadboard.GPIO.Utils do
   end
 
   def get_platform() do
-    get_env("breadboard_platform", :stub)
-    |> to_key_label
+    key = "breadboard_platform"
+    ( Application.get_env(:breadboard, key) ||
+      System.get_env(to_string(key)) ||
+      platform_by_gpio() )
+    |> to_key_label()
+  end
+
+  defp platform_by_gpio() do
+    case gpio_info_name() do
+      :stub ->
+        :stub
+      _ ->
+        :unknown_platform
+    end
   end
 
   def gpio_info_name() do
-    (get_env("breadboard_gpio_info_name", Circuits.GPIO.info.name))
-    |> to_key_label
+    Circuits.GPIO.info.name
   end
-
-  defp get_env(key,  default \\ nil) do
-    Application.get_env(:breadboard, key) ||
-      System.get_env(to_string(key)) ||
-        default
-  end
-
-  # defp get_system_env(key, default \\ nil) do
-  #   System.get_env(to_string(key), default)
-  # end
 
 end

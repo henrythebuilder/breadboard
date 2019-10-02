@@ -3,20 +3,19 @@ defmodule SwitchServerTest do
 
   alias Breadboard.Switch.SwitchServer
 
-  setup_all do
-    Breadboard.set_platform(:stub)
-  end
-
+  @tag stub_test: true
   test "initial value 0" do
     {:ok, pid} = SwitchServer.start_link([pin: :gpio1, direction: :output, initial_value: 0])
     assert 0 == GenServer.call(pid, :get_value)
   end
 
+  @tag stub_test: true
   test "initial value 1" do
     {:ok, pid} = SwitchServer.start_link([pin: :gpio1, direction: :output, initial_value: 1])
     assert 1 == GenServer.call(pid, :get_value)
   end
 
+  @tag stub_test: true
   test "turn on/off operation" do
     {:ok, pid} = SwitchServer.start_link([pin: :gpio1, direction: :output])
     assert :ok == GenServer.call(pid, :turn_on)
@@ -25,6 +24,7 @@ defmodule SwitchServerTest do
     assert 0 == GenServer.call(pid, :get_value)
   end
 
+  @tag stub_test: true
   test "turn_on/off an only input pin will terminate the switch" do
     Process.flag(:trap_exit, true)
     {:ok, pid} = SwitchServer.start_link([pin: :gpio1, direction: :input])
@@ -42,6 +42,7 @@ defmodule SwitchServerTest do
 
   end
 
+  @tag stub_test: true
   test "Manage pin interrupts (enable/disable)" do
     {:ok, pid0} = SwitchServer.start_link([pin: :gpio1, direction: :input])
     {:ok, pid1} = SwitchServer.start_link([pin: :gpio1, direction: :output])
@@ -57,6 +58,5 @@ defmodule SwitchServerTest do
     Process.sleep(10)
     assert 0 == GenServer.call(pid_test, :get_value)
   end
-
 
 end

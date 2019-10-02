@@ -20,27 +20,25 @@ defmodule Breadboard.Pinout do
 
   ## Example for Allwinner platform calling 'Breadboard.Pinout.label_to_pin' with "PG8", :pg8, 32 the value returne is always 200 (the real reference for sysfs number)
 
-      iex> Breadboard.set_platform(:sunxi)
-      iex> Breadboard.Pinout.label_to_pin("PG8")
-      200
-      iex> Breadboard.Pinout.label_to_pin(:pg8)
-      200
-      iex> Breadboard.Pinout.label_to_pin(32)
-      200
-      iex> Breadboard.Pinout.label_to_pin(:pin32)
-      200
+      iex> if(Breadboard.GPIO.Utils.get_platform()==:sunxi ) do
+      iex> 200 = Breadboard.Pinout.label_to_pin("PG8")
+      iex> 200 = Breadboard.Pinout.label_to_pin(:pg8)
+      iex> 200 = Breadboard.Pinout.label_to_pin(32)
+      iex> 200 = Breadboard.Pinout.label_to_pin(:pin32)
+      iex> nil
+      iex> end
+      nil
 
   ## Examples (for the default 'stub' reference)
 
-      iex> Breadboard.set_platform(:stub)
-      iex> Breadboard.Pinout.label_to_pin("GPIO18")
-      18
-      iex> Breadboard.Pinout.label_to_pin(:gpio18)
-      18
-      iex> Breadboard.Pinout.label_to_pin(18)
-      18
-      iex> Breadboard.Pinout.label_to_pin(:pin18)
-      18
+      iex> if(Breadboard.GPIO.Utils.get_platform()==:stub ) do
+      iex> 18 = Breadboard.Pinout.label_to_pin("GPIO18")
+      iex> 18 = Breadboard.Pinout.label_to_pin(:gpio18)
+      iex> 18 = Breadboard.Pinout.label_to_pin(18)
+      iex> 18 = Breadboard.Pinout.label_to_pin(:pin18)
+      iex> nil
+      iex> end
+      nil
 
   """
   def label_to_pin(label) do
@@ -54,11 +52,14 @@ defmodule Breadboard.Pinout do
 
   ## Examples (for the default 'stub' reference)
 
-      iex> Breadboard.set_platform(:stub)
-      iex> Breadboard.Pinout.pin_to_label(:pin18)
-      :gpio18
-      iex> Breadboard.Pinout.pin_to_label(18)
-      :gpio18
+      iex> if(Breadboard.GPIO.Utils.get_platform()==:stub ) do
+      iex> :gpio18 = Breadboard.Pinout.pin_to_label(:gpio18)
+      iex> :gpio18 = Breadboard.Pinout.pin_to_label("GPIO18")
+      iex> :gpio18 = Breadboard.Pinout.pin_to_label(:pin18)
+      iex> :gpio18 = Breadboard.Pinout.pin_to_label(18)
+      iex> nil
+      iex> end
+      nil
 
   """
   def pin_to_label(pin) do
