@@ -37,7 +37,7 @@ defmodule Breadboard.GPIO.PinoutServer do
   end
 
   defp load_state() do
-    %{gpio_info_name: Breadboard.GPIO.Utils.gpio_info_name(),
-       platform: Breadboard.GPIO.Utils.get_platform()}
+    %{gpio_info_name: Breadboard.gpio_info_name(),
+       platform: Breadboard.get_platform()}
   end
 end

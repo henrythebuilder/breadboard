@@ -6,7 +6,7 @@ defmodule Breadboard.Switch do
 
   ## Examples (for the default 'stub' reference)
 
-      iex> if(Breadboard.GPIO.Utils.get_platform()==:stub ) do
+      iex> if(Breadboard.get_platform()==:stub ) do
       iex> {:ok, switch} = Breadboard.Switch.connect([pin: :gpio18, direction: :output])
       iex> Breadboard.Switch.turn_on(switch)
       iex> 1 = Breadboard.Switch.get_value(switch)
@@ -16,7 +16,7 @@ defmodule Breadboard.Switch do
 
   ### Switch with initial value
 
-      iex> if(Breadboard.GPIO.Utils.get_platform()==:stub ) do
+      iex> if(Breadboard.get_platform()==:stub ) do
       iex> {:ok, switch1} = Breadboard.Switch.connect([pin: :gpio18, direction: :output, initial_value: 1])
       iex> {:ok, switch0} = Breadboard.Switch.connect([pin: "GPIO9", direction: :output, initial_value: 0])
       iex> 0 = Breadboard.Switch.get_value(switch0)
@@ -26,7 +26,7 @@ defmodule Breadboard.Switch do
       nil
 
   ### Switch as input and output (Stub HAL with pair of GPIOs is connected)
-      iex> if(Breadboard.GPIO.Utils.get_platform()==:stub ) do # only for Unit Test purpose
+      iex> if(Breadboard.get_platform()==:stub ) do # only for Unit Test purpose
       ...> Breadboard.set_platform(:stub)
       ...> {:ok, switch0} = Breadboard.Switch.connect([pin: :gpio0, direction: :output, initial_value: 0])
       ...> {:ok, switch1} = Breadboard.Switch.connect([pin: :gpio1, direction: :input, initial_value: 0])
@@ -39,7 +39,7 @@ defmodule Breadboard.Switch do
       nil
 
   ### Simple Interrupt test:
-      iex> if(Breadboard.GPIO.Utils.get_platform()==:stub ) do # only for Unit Test purpose
+      iex> if(Breadboard.get_platform()==:stub ) do # only for Unit Test purpose
       ...>   Breadboard.set_platform(:stub)
       ...>   defmodule InterruptsTest do
       ...>     use Breadboard.IRQ

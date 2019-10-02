@@ -1,11 +1,7 @@
 defmodule Breadboard.Pinout do
 
   @moduledoc """
-  This module manage the pinout for the used platform defined into 'BROADCOM_PLATFORM' env variable.
-
-  At the moment supported platform are:
-  - 'stub' -> hardware abstraction layer on platforms without GPIO support
-  - 'sunxi'-> ARM SoCs family from Allwinner Technology
+  This module manage the pinout for the supported platform.
 
   Note that accessing the GPIO pins through sysfs in some case (i.e. ARM SoCs family from Allwinner Technology) the pinout number/label may differ from real pin reference number.
 
@@ -20,7 +16,7 @@ defmodule Breadboard.Pinout do
 
   ## Example for Allwinner platform calling 'Breadboard.Pinout.label_to_pin' with "PG8", :pg8, 32 the value returne is always 200 (the real reference for sysfs number)
 
-      iex> if(Breadboard.GPIO.Utils.get_platform()==:sunxi ) do
+      iex> if(Breadboard.get_platform()==:sunxi ) do
       iex> 200 = Breadboard.Pinout.label_to_pin("PG8")
       iex> 200 = Breadboard.Pinout.label_to_pin(:pg8)
       iex> 200 = Breadboard.Pinout.label_to_pin(32)
@@ -31,7 +27,7 @@ defmodule Breadboard.Pinout do
 
   ## Examples (for the default 'stub' reference)
 
-      iex> if(Breadboard.GPIO.Utils.get_platform()==:stub ) do
+      iex> if(Breadboard.get_platform()==:stub ) do
       iex> 18 = Breadboard.Pinout.label_to_pin("GPIO18")
       iex> 18 = Breadboard.Pinout.label_to_pin(:gpio18)
       iex> 18 = Breadboard.Pinout.label_to_pin(18)
@@ -52,7 +48,7 @@ defmodule Breadboard.Pinout do
 
   ## Examples (for the default 'stub' reference)
 
-      iex> if(Breadboard.GPIO.Utils.get_platform()==:stub ) do
+      iex> if(Breadboard.get_platform()==:stub ) do
       iex> :gpio18 = Breadboard.Pinout.pin_to_label(:gpio18)
       iex> :gpio18 = Breadboard.Pinout.pin_to_label("GPIO18")
       iex> :gpio18 = Breadboard.Pinout.pin_to_label(:pin18)

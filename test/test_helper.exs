@@ -1,6 +1,6 @@
 defmodule TestConfig do
   def exclude_test() do
-    case Breadboard.GPIO.Utils.get_platform() do
+    case Breadboard.get_platform() do
       :stub ->
         [:platform_sunxi]
       :sunxi ->
