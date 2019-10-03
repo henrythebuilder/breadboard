@@ -1,11 +1,49 @@
 defmodule Breadboard.GPIO.BaseGPIO do
 
-  @moduledoc false
+  @moduledoc """
+  Define the base to handle GPIO pinout for the supported platform.
 
-  #
-  # [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"]
-  #
-  @callback pinout_map() :: any
+  In order to support a Pinout mapping for a specific platform this `behaviours` can be referenced by modules implementing `c:pinout_map/0` function.
+  This function must return a list with GPIO pinout information, and any element must support the keys:
+
+  * `:pin` - the pin number ()
+  * `:sysfs` - the pin number in user space using sysfs
+  * `:pin_key` - key to identify the pin as atom
+  * `:pin_label` - an atom to identify the pin label
+  * `:pin_name` - the name of the pin
+
+  ## Example for the Orange PI
+  for the pin `PA12` (first GPIO pin) the list element is:
+
+  ```[pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"]```
+
+  ... for the pin 'PG8':
+
+  ```[pin: 32, sysfs: 200, pin_key: :pin32, pin_label: :pg8, pin_name: "PG8"]```
+
+  and so on for any pin:
+
+  ```
+  [
+    [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"],
+    ...
+    [pin: 32, sysfs: 200, pin_key: :pin32, pin_label: :pg8, pin_name: "PG8"],
+    ...
+    [pin: 40, sysfs: 199, pin_key: :pin40, pin_label: :pg7, pin_name: "PG7"]
+  ]
+  ```
+
+
+  Reference: `Breadboard.GPIO.StubHalGPIO`, `Breadboard.GPIO.SunxiGPIO`
+  """
+
+  @typedoc "Pin single information"
+  @type pinout_item_info :: {:pin, non_neg_integer()} | {:sysfs, non_neg_integer()} | {:pin_key, atom()} | {:pin_label, atom()} | {:pin_name, String.t()}
+
+  @typedoc "Complete Pinout information"
+  @type pinout_item :: [pinout_item_info]
+
+  @callback pinout_map() :: [pinout_item()]
 
   defmacro __using__(_opts) do
     quote do
