@@ -72,6 +72,8 @@ defmodule Breadboard.Switch do
 
   """
 
+  @typedoc "GPIO value: low = 0 - high = 1"
+  @type value :: 0 | 1
 
   @doc """
   Connect to a pin.
@@ -84,6 +86,7 @@ defmodule Breadboard.Switch do
   ## Return values
   On success the function returns `{:ok, switch}`, where `switch` is the PID of the supervised 'Switch'
   """
+  @spec connect(list()) :: {:ok, reference()} | {:error, atom()}
   def connect(options) do
     Breadboard.DynamicSupervisor.start_switch_server_child(options)
   end
@@ -91,6 +94,7 @@ defmodule Breadboard.Switch do
   @doc """
   Set the value 1 of a switch (only for `:output` switch)
   """
+  @spec turn_on(reference()) :: :ok
   def turn_on(switch) do
     GenServer.call(switch, :turn_on)
   end
@@ -98,6 +102,7 @@ defmodule Breadboard.Switch do
   @doc """
   Set the value 0 of a switch (only for `:output` switch)
   """
+  @spec turn_off(reference()) :: :ok
   def turn_off(switch) do
     GenServer.call(switch, :turn_off)
   end
@@ -105,6 +110,7 @@ defmodule Breadboard.Switch do
   @doc """
   Read the current value of a switch
   """
+  @spec get_value(reference()) :: value()
   def get_value(switch) do
     GenServer.call(switch, :get_value)
   end
@@ -112,6 +118,7 @@ defmodule Breadboard.Switch do
   @doc """
   Set the value for a switch (only for `:output` switch)
   """
+  @spec set_value(reference(), value()) :: :ok
   def set_value(switch, value) do
     GenServer.call(switch, {:set_value, value})
   end
@@ -128,6 +135,7 @@ defmodule Breadboard.Switch do
   ## Return values
   `:ok` on success
   """
+  @spec set_interrupts(reference(), list()) :: :ok | {:error, atom()}
   def set_interrupts(switch, irq_opts) do
     GenServer.call(switch, {:set_interrupts, irq_opts})
   end
@@ -135,6 +143,7 @@ defmodule Breadboard.Switch do
   @doc """
   Disconnect the switch from the pin
   """
+  @spec disconnect(reference()) :: :ok | {:error, :not_found}
   def disconnect(switch) do
     Breadboard.DynamicSupervisor.stop_switch_server_child(switch)
   end

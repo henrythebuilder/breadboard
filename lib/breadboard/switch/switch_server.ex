@@ -50,12 +50,16 @@ defmodule Breadboard.Switch.SwitchServer do
   end
 
   def handle_call({:set_interrupts, irq_opts}, _from, state) do
-    Circuits.GPIO.set_interrupts(state[:gpio],
-                                 Keyword.get(irq_opts, :trigger, :both),
-                                 Keyword.get(irq_opts, :opts, []))
-    {:reply,
-     :ok,
-     Map.put(state, :interrupts_module, Keyword.get(irq_opts, :module, nil))}
+    set_irq = Circuits.GPIO.set_interrupts(state[:gpio],
+      Keyword.get(irq_opts, :trigger, :both),
+      Keyword.get(irq_opts, :opts, []))
+    new_state = case set_irq do
+                  :ok ->
+                    Map.put(state, :interrupts_module, Keyword.get(irq_opts, :module, nil))
+                  _ ->
+                    state
+                end
+    {:reply, set_irq, new_state}
   end
 
   def handle_info({:circuits_gpio, pin_number, timestamp, value}, state) do
