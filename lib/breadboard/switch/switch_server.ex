@@ -61,6 +61,13 @@ defmodule Breadboard.Switch.SwitchServer do
     {:noreply, state}
   end
 
+  def handle_call({:set_direction, switch_direction}, _from, state) do
+    {:reply,
+     SwitchServerCmd.set_direction(state[:gpio], switch_direction),
+     state}
+  end
+
+
   def terminate(reason, state) do
     SwitchServerCmd.terminate(state[:gpio])
     Logger.info("SwitchServer terminate: reason='#{inspect(reason)}', state='#{inspect(state)}'")

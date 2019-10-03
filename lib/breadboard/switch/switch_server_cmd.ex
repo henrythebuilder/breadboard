@@ -11,7 +11,7 @@ defmodule Breadboard.Switch.SwitchServerCmd do
     open_gpio = Circuits.GPIO.open(pin, init_arg[:direction], Keyword.take(init_arg, [:initial_value]) )
     Logger.info("SwitchServer open GPIO #{inspect(pin)} with result: '#{inspect(open_gpio)}'")
     open_gpio
-    end
+  end
 
   def pin_number(gpio) do
     Circuits.GPIO.pin(gpio)
@@ -45,6 +45,11 @@ defmodule Breadboard.Switch.SwitchServerCmd do
                                 pin_label: pin_label}]
     apply(interrupts_module, :interrupt_service_routine, args)
   end
+
+  def set_direction(gpio, switch_direction) do
+    Circuits.GPIO.set_direction(gpio, switch_direction)
+  end
+
 
   def terminate(gpio) do
     Circuits.GPIO.close(gpio)

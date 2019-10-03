@@ -36,7 +36,8 @@ defmodule Breadboard.Switch do
 
   ### Switch as input and output (Stub HAL with pair of GPIOs is connected)
       iex> if(Breadboard.get_platform()==:stub ) do # only for Unit Test purpose
-      ...> {:ok, switch0} = Breadboard.Switch.connect([pin: :gpio0, direction: :output, initial_value: 0])
+      ...> {:ok, switch0} = Breadboard.Switch.connect([pin: :gpio0, direction: :input, initial_value: 0])
+      ...> :ok = Breadboard.Switch.set_direction(switch0, :output)
       ...> {:ok, switch1} = Breadboard.Switch.connect([pin: :gpio1, direction: :input, initial_value: 0])
       ...> Breadboard.Switch.get_value(switch0)
       ...> Breadboard.Switch.get_value(switch1)
@@ -73,8 +74,11 @@ defmodule Breadboard.Switch do
 
   """
 
-  @typedoc "GPIO value: 0/1 as in Circuits.GPIO"
+  @typedoc "Switch value: 0/1 - as in Circuits.GPIO"
   @type value :: Circuits.GPIO.value()
+
+  @typedoc "The Switch direction (input or output) - as in Circuits.GPIO 'pin direction'"
+  @type switch_direction :: Circuits.GPIO.pin_direction()
 
   @doc """
   Connect to a pin.
@@ -147,6 +151,14 @@ defmodule Breadboard.Switch do
   @spec pin_number(reference()) :: non_neg_integer()
   def pin_number(switch) do
     GenServer.call(switch, :pin_number)
+  end
+
+  @doc """
+  Change the direction of the Switch
+  """
+  @spec set_direction(reference(), switch_direction()) :: :ok | {:error, atom()}
+  def set_direction(switch, switch_direction) do
+    GenServer.call(switch, {:set_direction, switch_direction})
   end
 
   @doc """
