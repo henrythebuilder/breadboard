@@ -21,12 +21,12 @@ defmodule Breadboard.GPIO.PinoutServer do
   end
 
   def handle_call({:label_to_pin, label}, _from, state) do
-    pin = Breadboard.GPIO.PinoutHelp.label_to_pin(state.platform, state.gpio_info_name, label)
+    pin = Breadboard.GPIO.PinoutCmd.label_to_pin(state.platform, state.gpio_info_name, label)
     { :reply, pin, state }
   end
 
   def handle_call({:pin_to_label, pin}, _from, state) do
-    label = Breadboard.GPIO.PinoutHelp.pin_to_label(state.platform, pin)
+    label = Breadboard.GPIO.PinoutCmd.pin_to_label(state.platform, pin)
     { :reply, label, state }
   end
 

@@ -1,4 +1,4 @@
-defmodule Breadboard.GPIO.PinoutHelp do
+defmodule Breadboard.GPIO.PinoutCmd do
   @moduledoc false
 
   def label_to_pin(:stub, mode, label), do: Breadboard.GPIO.StubHalGPIO.label_to_pin(label, mode)
