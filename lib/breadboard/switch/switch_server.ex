@@ -29,16 +29,18 @@ defmodule Breadboard.Switch.SwitchServer do
     open_gpio
   end
 
-  def handle_call(:turn_on, _from, state) do
+  def handle_call({:set_value, value}, _from, state) do
     {:reply,
-     Circuits.GPIO.write(state[:gpio], 1),
+     Circuits.GPIO.write(state[:gpio], value),
      state}
   end
 
-  def handle_call(:turn_off, _from, state) do
-    {:reply,
-     Circuits.GPIO.write(state[:gpio], 0),
-     state}
+  def handle_call(:turn_on, from, state) do
+    handle_call({:set_value, 1}, from, state)
+  end
+
+  def handle_call(:turn_off, from, state) do
+    handle_call({:set_value, 0}, from, state)
   end
 
   def handle_call(:get_value, _from, state) do

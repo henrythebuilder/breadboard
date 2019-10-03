@@ -25,6 +25,15 @@ defmodule SwitchServerTest do
   end
 
   @tag platform_stub: true
+  test "turn on/off operation by 'set_value" do
+    {:ok, pid} = SwitchServer.start_link([pin: :gpio1, direction: :output])
+    assert :ok == GenServer.call(pid, {:set_value, 1})
+    assert 1 == GenServer.call(pid, :get_value)
+    assert :ok == GenServer.call(pid, {:set_value, 0})
+    assert 0 == GenServer.call(pid, :get_value)
+  end
+
+  @tag platform_stub: true
   test "turn_on/off an only input pin will terminate the switch" do
     Process.flag(:trap_exit, true)
     {:ok, pid} = SwitchServer.start_link([pin: :gpio1, direction: :input])

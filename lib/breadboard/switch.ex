@@ -4,12 +4,20 @@ defmodule Breadboard.Switch do
   This module manage the 'switch' operation on gpio.
   Any switch is supervised in the application
 
-  ## Examples (for the default 'stub' reference)
+  ## Examples
+
+  ### Turn on/off the switch
 
       iex> if(Breadboard.get_platform()==:stub ) do
       iex> {:ok, switch} = Breadboard.Switch.connect([pin: :gpio18, direction: :output])
       iex> Breadboard.Switch.turn_on(switch)
       iex> 1 = Breadboard.Switch.get_value(switch)
+      iex> Breadboard.Switch.turn_off(switch)
+      iex> 0 = Breadboard.Switch.get_value(switch)
+      iex> Breadboard.Switch.set_value(switch, 1)
+      iex> 1 = Breadboard.Switch.get_value(switch)
+      iex> Breadboard.Switch.set_value(switch, 0)
+      iex> 0 = Breadboard.Switch.get_value(switch)
       iex> nil
       iex> end
       nil
@@ -27,7 +35,6 @@ defmodule Breadboard.Switch do
 
   ### Switch as input and output (Stub HAL with pair of GPIOs is connected)
       iex> if(Breadboard.get_platform()==:stub ) do # only for Unit Test purpose
-      ...> Breadboard.set_platform(:stub)
       ...> {:ok, switch0} = Breadboard.Switch.connect([pin: :gpio0, direction: :output, initial_value: 0])
       ...> {:ok, switch1} = Breadboard.Switch.connect([pin: :gpio1, direction: :input, initial_value: 0])
       ...> Breadboard.Switch.get_value(switch0)
@@ -40,7 +47,6 @@ defmodule Breadboard.Switch do
 
   ### Simple Interrupt test:
       iex> if(Breadboard.get_platform()==:stub ) do # only for Unit Test purpose
-      ...>   Breadboard.set_platform(:stub)
       ...>   defmodule InterruptsTest do
       ...>     use Breadboard.IRQ
       ...>     def interrupt_service_routine(_irq_info) do
@@ -101,6 +107,13 @@ defmodule Breadboard.Switch do
   """
   def get_value(switch) do
     GenServer.call(switch, :get_value)
+  end
+
+  @doc """
+  Set the value for a switch (only for `:output` switch)
+  """
+  def set_value(switch, value) do
+    GenServer.call(switch, {:set_value, value})
   end
 
   @doc """
