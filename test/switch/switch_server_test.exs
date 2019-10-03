@@ -4,6 +4,12 @@ defmodule SwitchServerTest do
   alias Breadboard.Switch.SwitchServer
 
   @tag platform_stub: true
+  test "pin number" do
+    {:ok, pid} = SwitchServer.start_link([pin: :gpio18, direction: :output, initial_value: 0])
+    assert 18 == GenServer.call(pid, :pin_number)
+  end
+
+  @tag platform_stub: true
   test "initial value 0" do
     {:ok, pid} = SwitchServer.start_link([pin: :gpio1, direction: :output, initial_value: 0])
     assert 0 == GenServer.call(pid, :get_value)

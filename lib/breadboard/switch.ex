@@ -10,6 +10,7 @@ defmodule Breadboard.Switch do
 
       iex> if(Breadboard.get_platform()==:stub ) do
       iex> {:ok, switch} = Breadboard.Switch.connect([pin: :gpio18, direction: :output])
+      iex> 18 = Breadboard.Switch.pin_number(switch)
       iex> Breadboard.Switch.turn_on(switch)
       iex> 1 = Breadboard.Switch.get_value(switch)
       iex> Breadboard.Switch.turn_off(switch)
@@ -72,8 +73,8 @@ defmodule Breadboard.Switch do
 
   """
 
-  @typedoc "GPIO value: low = 0 - high = 1"
-  @type value :: 0 | 1
+  @typedoc "GPIO value: 0/1 as in Circuits.GPIO"
+  @type value :: Circuits.GPIO.value()
 
   @doc """
   Connect to a pin.
@@ -138,6 +139,14 @@ defmodule Breadboard.Switch do
   @spec set_interrupts(reference(), list()) :: :ok | {:error, atom()}
   def set_interrupts(switch, irq_opts) do
     GenServer.call(switch, {:set_interrupts, irq_opts})
+  end
+
+  @doc """
+  Get the Switch pin number
+  """
+  @spec pin_number(reference()) :: non_neg_integer()
+  def pin_number(switch) do
+    GenServer.call(switch, :pin_number)
   end
 
   @doc """

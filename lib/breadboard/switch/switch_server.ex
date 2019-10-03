@@ -29,6 +29,12 @@ defmodule Breadboard.Switch.SwitchServer do
     open_gpio
   end
 
+  def handle_call(:pin_number, _from, state) do
+    {:reply,
+     Circuits.GPIO.pin(state[:gpio]),
+     state}
+  end
+
   def handle_call({:set_value, value}, _from, state) do
     {:reply,
      Circuits.GPIO.write(state[:gpio], value),
