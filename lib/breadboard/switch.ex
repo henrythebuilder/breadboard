@@ -80,18 +80,27 @@ defmodule Breadboard.Switch do
   @typedoc "The Switch direction (input or output) - as in Circuits.GPIO 'pin direction'"
   @type switch_direction :: Circuits.GPIO.pin_direction()
 
-  @doc """
-  Connect to a pin.
+  @typedoc "Pull mode as defined in Circuits.GPIO"
+  @type pull_mode :: Circuits.GPIO.pull_mode()
 
-  ## Options:
+  @typedoc "Options for connect/2"
+  @type connect_options :: {:pin, any()} | {:direction, switch_direction} | {:initial_value, value() | :not_set} | {:pull_mode, pull_mode()}
+
+
+  @doc """
+  Connect to a GPIO pin.
+
+  Options:
+
   * `:pin` - any valid 'pin label' managed by `Breadboard.Pinout.label_to_pin/1`
   * `:direction` - as defined in the Circuit.GPIO.open
   * `:initial_value` - as defined in the Circuit.GPIO.open
+  * `:pull_mode` - as defined in the Circuit.GPIO.open
 
-  ## Return values
+  Return values:
   On success the function returns `{:ok, switch}`, where `switch` is the PID of the supervised 'Switch'
   """
-  @spec connect(list()) :: {:ok, reference()} | {:error, atom()}
+  @spec connect(connect_options()) :: {:ok, reference()} | {:error, atom()}
   def connect(options) do
     Breadboard.DynamicSupervisor.start_switch_server_child(options)
   end
@@ -160,6 +169,24 @@ defmodule Breadboard.Switch do
   def set_direction(switch, switch_direction) do
     GenServer.call(switch, {:set_direction, switch_direction})
   end
+
+  @doc """
+  Enable/disable internal pull-up/pull-down resistor
+
+  ## Exaple
+      iex> if(Breadboard.get_platform()==:stub ) do
+      iex> {:ok, switch} = Breadboard.Switch.connect([pin: :gpio18, direction: :output])
+      iex> :ok = Breadboard.Switch.set_pull_mode(switch, :pullup)
+      iex> nil
+      iex> end
+      nil
+
+  """
+  @spec set_pull_mode(reference(), pull_mode()) :: :ok | {:error, atom()}
+  def set_pull_mode(switch, pull_mode) do
+    GenServer.call(switch, {:set_pull_mode, pull_mode})
+  end
+
 
   @doc """
   Disconnect the switch from the pin

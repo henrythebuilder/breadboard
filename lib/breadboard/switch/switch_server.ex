@@ -54,19 +54,24 @@ defmodule Breadboard.Switch.SwitchServer do
     {:reply, set_irq, Map.merge(state, irq_state)}
   end
 
-  def handle_info({:circuits_gpio, pin_number, timestamp, value}, state) do
-    SwitchServerCmd.irq_service_call(state.interrupts_module,
-                                     state.pin_label,
-                                     pin_number, timestamp, value)
-    {:noreply, state}
-  end
-
   def handle_call({:set_direction, switch_direction}, _from, state) do
     {:reply,
      SwitchServerCmd.set_direction(state[:gpio], switch_direction),
      state}
   end
 
+  def handle_call({:set_pull_mode, pull_mode}, _from, state) do
+    {:reply,
+     SwitchServerCmd.set_pull_mode(state[:gpio], pull_mode),
+     state}
+  end
+
+  def handle_info({:circuits_gpio, pin_number, timestamp, value}, state) do
+    SwitchServerCmd.irq_service_call(state.interrupts_module,
+                                     state.pin_label,
+                                     pin_number, timestamp, value)
+    {:noreply, state}
+  end
 
   def terminate(reason, state) do
     SwitchServerCmd.terminate(state[:gpio])
