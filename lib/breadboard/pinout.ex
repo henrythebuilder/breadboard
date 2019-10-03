@@ -37,6 +37,7 @@ defmodule Breadboard.Pinout do
       nil
 
   """
+  @spec label_to_pin(any()) :: non_neg_integer()
   def label_to_pin(label) do
     GenServer.call(Breadboard.GPIO.PinoutServer.server_name(), {:label_to_pin, label})
   end
@@ -58,6 +59,7 @@ defmodule Breadboard.Pinout do
       nil
 
   """
+  @spec pin_to_label(any()) :: atom()
   def pin_to_label(pin) do
     GenServer.call(Breadboard.GPIO.PinoutServer.server_name(), {:pin_to_label, pin})
   end
