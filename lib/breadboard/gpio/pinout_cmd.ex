@@ -1,10 +1,17 @@
 defmodule Breadboard.GPIO.PinoutCmd do
   @moduledoc false
 
-  def label_to_pin(:stub, mode, label), do: Breadboard.GPIO.StubHalGPIO.label_to_pin(label, mode)
-  def label_to_pin(:sunxi, mode, label), do: Breadboard.GPIO.SunxiGPIO.label_to_pin(label, mode)
+  @platform_pinout %{
+    stub: Breadboard.GPIO.StubHalGPIO,
+    sunxi: Breadboard.GPIO.SunxiGPIO
+  }
 
-  def pin_to_label(:stub, pin), do: Breadboard.GPIO.StubHalGPIO.pin_to_label(pin)
-  def pin_to_label(:sunxi, pin), do: Breadboard.GPIO.SunxiGPIO.pin_to_label(pin)
+  def label_to_pin(platform, mode, label) do
+    apply(@platform_pinout[platform], :label_to_pin, [label, mode])
+  end
+
+  def pin_to_label(platform, pin) do
+    apply(@platform_pinout[platform], :pin_to_label, [pin])
+  end
 
 end
