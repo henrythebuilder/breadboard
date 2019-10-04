@@ -1,10 +1,10 @@
 defmodule Breadboard.GPIO.BaseGPIO do
 
   @moduledoc """
-  Define the base to handle GPIO pinout for the supported platform.
+  Define the behaviour to handle GPIOs pinout mapping for a specific platform.
 
   In order to support a Pinout mapping for a specific platform this `behaviours` can be referenced by modules implementing `c:pinout_map/0` function.
-  This function must return a list with GPIO pinout information, and any element must support the keys:
+  This function must return a list with GPIOs pinout information, and any element must support the keys:
 
   * `:pin` - the pin number ()
   * `:sysfs` - the pin number in user space using sysfs
@@ -12,27 +12,7 @@ defmodule Breadboard.GPIO.BaseGPIO do
   * `:pin_label` - an atom to identify the pin label
   * `:pin_name` - the name of the pin
 
-  ## Example for the Orange PI
-  for the pin `PA12` (first GPIO pin) the list element is:
-
-  ```[pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"]```
-
-  ... for the pin 'PG8':
-
-  ```[pin: 32, sysfs: 200, pin_key: :pin32, pin_label: :pg8, pin_name: "PG8"]```
-
-  and so on for any pin:
-
-  ```
-  [
-    [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"],
-    ...
-    [pin: 32, sysfs: 200, pin_key: :pin32, pin_label: :pg8, pin_name: "PG8"],
-    ...
-    [pin: 40, sysfs: 199, pin_key: :pin40, pin_label: :pg7, pin_name: "PG7"]
-  ]
-  ```
-
+  As convention all values are defined lowercase except for `pin_name`
 
   Reference: `Breadboard.GPIO.StubHalGPIO`, `Breadboard.GPIO.SunxiGPIO`
   """
@@ -43,6 +23,9 @@ defmodule Breadboard.GPIO.BaseGPIO do
   @typedoc "Complete Pinout information"
   @type pinout_item :: [pinout_item_info]
 
+  @doc """
+  Return the complete pinout map for a specific platform
+  """
   @callback pinout_map() :: [pinout_item()]
 
   defmacro __using__(_opts) do
@@ -52,14 +35,22 @@ defmodule Breadboard.GPIO.BaseGPIO do
 
       @after_compile __MODULE__
 
+      @doc"""
+      Get real pin reference from 'pinout label'.
+
+      Returns the real pin number (default for `sysfs` user space)
+      """
       def label_to_pin(label, mode \\ :sysfs)
-
       def label_to_pin(label, :stub), do: label_to_pin(label, :sysfs)
-
       def label_to_pin(label, mode) do
         search_pin(label, mode)
       end
 
+      @doc """
+      Get pinout label from the pinout number.
+
+      Returns the pin label as atom.
+      """
       def pin_to_label(pin) do
         search_pin(pin, :pin_label)
       end

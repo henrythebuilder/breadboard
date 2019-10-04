@@ -65,7 +65,28 @@ end
 
 defmodule Breadboard.GPIO.SunxiGPIO do
 
-  @moduledoc false
+  @moduledoc """
+  Manage the pinout of GPIOs in **sunxi** hardware layer for platforms **ARM SoCs family from Allwinner Technology**.
+
+  For this platform there isn't a simple mapping (ono to one) as explained in the [linux-sunxi community](https://linux-sunxi.org/GPIO#Accessing_the_GPIO_pins_through_sysfs_with_mainline_kernel), for example the pin number 3 (`PA12`) is mapped as:
+
+  ```
+  [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"]
+  ```
+
+  so the complete pinout map is in the form:
+
+  ```
+  [
+    [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"],
+    ...
+    [pin: 32, sysfs: 200, pin_key: :pin32, pin_label: :pg8, pin_name: "PG8"],
+    ...
+    [pin: 40, sysfs: 199, pin_key: :pin40, pin_label: :pg7, pin_name: "PG7"]
+  ]
+  ```
+
+  """
 
   @pinout_map Breadboard.GPIO.SunxiPinDefiner.pin_definition()
 

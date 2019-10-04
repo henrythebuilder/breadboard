@@ -23,7 +23,28 @@ end
 
 defmodule Breadboard.GPIO.StubHalGPIO do
 
-  @moduledoc false
+  @moduledoc """
+  Manage the pinout of gpio in "stub" hardware abstraction layer for platforms without GPIO support.
+  Handle GPIOs as supported in `Circuits.GPIO`
+
+  There are 64 GPIOs where:
+
+  * pin 1 is GPIO1, pin 2 is GPIO2 ...
+  * sysfs is mapped to the same pin number
+
+  so the complete pinout map is in the form:
+
+  ```
+  [
+    [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+    ...
+    [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"],
+    ...
+    [pin: 64, sysfs: 64, pin_key: :pin64, pin_label: :gpio64, pin_name: "GPIO64"]
+  ]
+  ```
+  """
+
 
   @pinout_map Breadboard.GPIO.StubHalGPIOPinDefiner.pin_definition()
 
