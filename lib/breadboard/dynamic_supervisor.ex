@@ -19,7 +19,7 @@ defmodule Breadboard.DynamicSupervisor do
 
   @impl true
   def init(_init_arg) do
-    Logger.info("Breadboard DynamicSupervisor start")
+    Logger.debug("Breadboard DynamicSupervisor start")
     DynamicSupervisor.init(strategy: :one_for_one)
   end
 

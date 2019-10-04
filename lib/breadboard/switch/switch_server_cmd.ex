@@ -9,7 +9,7 @@ defmodule Breadboard.Switch.SwitchServerCmd do
   def open_gpio_pin(init_arg) do
     pin = Pinout.label_to_pin(init_arg[:pin])
     open_gpio = Circuits.GPIO.open(pin, init_arg[:direction], Keyword.take(init_arg, [:initial_value, :pull_mode]) )
-    Logger.info("SwitchServer open GPIO #{inspect(pin)} with result: '#{inspect(open_gpio)}'")
+    Logger.debug("SwitchServer open GPIO #{inspect(pin)} with result: '#{inspect(open_gpio)}'")
     open_gpio
   end
 
