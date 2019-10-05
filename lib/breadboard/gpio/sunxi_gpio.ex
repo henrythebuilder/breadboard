@@ -33,23 +33,18 @@ defmodule Breadboard.GPIO.SunxiPinDefiner do
   }
 
   def pin_definition() do
-    extend_pinout_info()
+    Breadboard.GPIO.Utils.build_pinout_map(@pinout_map, &update_pin/2)
   end
 
   # from: 3  => [pin_name: "PA12"]
   # to:   [sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12", pin: 3]
-  defp extend_pinout_info() do
-    @pinout_map
-    |> Enum.reduce([], fn {pin_number, info}, pins ->
-      pin_info =
-        [sysfs: label_to_sysfs_pin(info[:pin_name])]
-        |> Keyword.merge(pin_key: Breadboard.GPIO.Utils.to_pin_key("pin", pin_number))
-        |> Keyword.merge(pin_label: Breadboard.GPIO.Utils.to_key_label(info[:pin_name]))
-        |> Keyword.merge(pin_name: info[:pin_name])
-        |> Keyword.merge(pin: pin_number)
-
-      [pin_info | pins]
-    end)
+  defp update_pin({pin_number, info}, pins) do
+    pin_info =[sysfs: label_to_sysfs_pin(info[:pin_name])]
+    |> Keyword.merge(pin_key: Breadboard.GPIO.Utils.to_pin_key("pin", pin_number))
+    |> Keyword.merge(pin_label: Breadboard.GPIO.Utils.to_key_label(info[:pin_name]))
+    |> Keyword.merge(pin_name: info[:pin_name])
+    |> Keyword.merge(pin: pin_number)
+    [pin_info | pins]
   end
 
   # https://linux-sunxi.org/GPIO
@@ -68,7 +63,7 @@ defmodule Breadboard.GPIO.SunxiGPIO do
   @moduledoc """
   Manage the pinout of GPIOs in **sunxi** hardware layer for platforms **ARM SoCs family from Allwinner Technology**.
 
-  For this platform there isn't a simple mapping (ono to one) as explained in the [linux-sunxi community](https://linux-sunxi.org/GPIO#Accessing_the_GPIO_pins_through_sysfs_with_mainline_kernel), for example the pin number 3 (`PA12`) is mapped as:
+  For this platform there isn't a simple mapping (ono to one) as explained in the [linux-sunxi community](https://linux-sunxi.org/GPIO#Accessing_the_GPIO_pins_through_sysfs_with_mainline_kernel), for example the pin number 3 (`PA12`) is classified as:
 
   ```
   [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"]
@@ -77,16 +72,22 @@ defmodule Breadboard.GPIO.SunxiGPIO do
   so the complete pinout map is in the form:
 
   ```
-  [
-    [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"],
+  %{
+    {:pin, 3}           => [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"],
+    {:sysfs, 3}         => [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"],
+    {:pin_key, :pin3}   => [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"],
+    {:pin_label, :pa12} => [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"],
+    {:pin_name, "PA12"} => [pin: 3, sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12"],
     ...
-    [pin: 32, sysfs: 200, pin_key: :pin32, pin_label: :pg8, pin_name: "PG8"],
+    {:pin, 32}          => [pin: 32, sysfs: 200, pin_key: :pin32, pin_label: :pg8, pin_name: "PG8"],
+    {...}               => ...
     ...
-    [pin: 40, sysfs: 199, pin_key: :pin40, pin_label: :pg7, pin_name: "PG7"]
-  ]
+    {:pin, 40}          => [pin: 40, sysfs: 199, pin_key: :pin40, pin_label: :pg7, pin_name: "PG7"],
+    {...}               => ...
+  }
   ```
-
   """
+
 
   @pinout_map Breadboard.GPIO.SunxiPinDefiner.pin_definition()
 

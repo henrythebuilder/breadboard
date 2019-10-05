@@ -2,12 +2,14 @@ defmodule Breadboard.GPIO.StubHalGPIOPinDefiner do
 
   @moduledoc false
 
-  # from: 3
-  # to:   [sysfs: 3, pin_key: :pin3, pin_label: :gpio3, pin_name: "GPIO3", pin: 3]
+  @pinout_map (0..63)
+
   def pin_definition() do
-    (0..63) |> Enum.reduce([], &update_pin/2)
+    Breadboard.GPIO.Utils.build_pinout_map(@pinout_map, &update_pin/2)
   end
 
+  # from: 3
+  # to:   [sysfs: 3, pin_key: :pin3, pin_label: :gpio3, pin_name: "GPIO3", pin: 3]
   defp update_pin(n, pins) do
     pin = Breadboard.GPIO.Utils.to_pin_key("pin", n)
     gpio = Breadboard.GPIO.Utils.to_pin_key("gpio", n)
@@ -30,18 +32,24 @@ defmodule Breadboard.GPIO.StubHalGPIO do
   There are 64 GPIOs where:
 
   * pin 1 is GPIO1, pin 2 is GPIO2 ...
-  * sysfs is mapped to the same pin number
+  * sysfs pin number is mapped to the same pin number
 
   so the complete pinout map is in the form:
 
   ```
-  [
-    [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+  %{
+     {:pin, 1}            => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+     {:sysfs, 1}          => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+     {:pin_key, :pin1}    => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+     {:pin_label, :gpio1} => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+     {:pin_name, "GPIO1"} => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
     ...
-    [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"],
+    {:pin, 32}            => [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"],
+    {...}                 => ...
     ...
-    [pin: 64, sysfs: 64, pin_key: :pin64, pin_label: :gpio64, pin_name: "GPIO64"]
-  ]
+    {:pin, 64}            => [pin: 64, sysfs: 64, pin_key: :pin64, pin_label: :gpio64, pin_name: "GPIO64"],
+    {...}                 => ...
+  }
   ```
   """
 

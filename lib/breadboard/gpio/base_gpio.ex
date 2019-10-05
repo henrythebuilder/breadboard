@@ -4,7 +4,8 @@ defmodule Breadboard.GPIO.BaseGPIO do
   Define the behaviour to handle GPIOs pinout mapping for a specific platform.
 
   In order to support a Pinout mapping for a specific platform this `behaviours` can be referenced by modules implementing `c:pinout_map/0` function.
-  This function must return a list with GPIOs pinout information, and any element must support the keys:
+  This function must return a map with the GPIOs pinout information.
+  Any element must support the keys:
 
   * `:pin` - the pin number ()
   * `:sysfs` - the pin number in user space using sysfs
@@ -12,7 +13,30 @@ defmodule Breadboard.GPIO.BaseGPIO do
   * `:pin_label` - an atom to identify the pin label
   * `:pin_name` - the name of the pin
 
-  As convention all values are defined lowercase except for `pin_name`
+  As convention all values are defined lowercase except for `pin_name`.
+
+  Any pin is classified with a keyword list with the above keys.
+
+  For example the pin number 1 in the stub hardware abstraction is classified as:
+
+  ```
+  [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"]
+  ```
+
+  so in the complete pinout map for this pin it will be generate the corrispondend key/value pair for any single item:
+
+  ```
+  %{
+     {:pin, 1}            => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+     {:sysfs, 1}          => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+     {:pin_key, :pin1}    => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+     {:pin_label, :gpio1} => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+     {:pin_name, "GPIO1"} => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"]
+  }
+  ```
+
+  and so on for any single pin to build the entire pinout map.
+
 
   Reference: `Breadboard.GPIO.StubHalGPIO`, `Breadboard.GPIO.SunxiGPIO`
   """
@@ -55,11 +79,12 @@ defmodule Breadboard.GPIO.BaseGPIO do
         search_pin(pin, :pin_label)
       end
 
-      defp search_pin(label, key) do
-        pin_info = Enum.find(pinout_map(),
-          fn (info) ->
-            pin_info_has_value?(info, label)
-          end)
+      defp search_pin(value, key) do
+        pin_info = Map.get(pinout_map(), {:pin_key, value}) ||
+          Map.get(pinout_map(), {:pin_label, value}) ||
+          Map.get(pinout_map(), {:pin, value}) ||
+          Map.get(pinout_map(), {:pin_name, value})
+
         Keyword.get(pin_info, key)
       end
 
@@ -72,7 +97,7 @@ defmodule Breadboard.GPIO.BaseGPIO do
 
       defp check_pinout_map_definition() do
         true = Enum.all?(pinout_map(),
-          fn info ->
+          fn {key, info} ->
             keys = Keyword.keys(info)
             Keyword.equal?( keys, [:sysfs, :pin_key, :pin_label, :pin_name, :pin])
           end
