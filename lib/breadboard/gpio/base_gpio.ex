@@ -97,9 +97,10 @@ defmodule Breadboard.GPIO.BaseGPIO do
 
       defp check_pinout_map_definition() do
         true = Enum.all?(pinout_map(),
-          fn {key, info} ->
+          fn {{key, val}, info} ->
             keys = Keyword.keys(info)
             Keyword.equal?( keys, [:sysfs, :pin_key, :pin_label, :pin_name, :pin])
+            ^val = Keyword.get(info, key, nil)
           end
         )
       end
