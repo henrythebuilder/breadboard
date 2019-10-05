@@ -88,13 +88,6 @@ defmodule Breadboard.GPIO.BaseGPIO do
         Keyword.get(pin_info, key)
       end
 
-      defp pin_info_has_value?(info, value) do
-        (info[:pin_key] == value) ||
-        (info[:pin_label] == value) ||
-        (info[:pin] == value) ||
-        (info[:pin_name] == value)
-      end
-
       defp check_pinout_map_definition() do
         true = Enum.all?(pinout_map(),
           fn {{key, val}, info} ->

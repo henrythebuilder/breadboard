@@ -15,7 +15,7 @@ defmodule Breadboard.GPIO.Utils do
     |> pinout_map_definition
   end
 
-  defp pinout_map_definition(pinout_info) do
+  def pinout_map_definition(pinout_info) do
     pinout_info
     |> Enum.reduce(%{}, fn (pin_info, pinout_map) ->
       pin_map = Enum.reduce(pin_info, %{}, fn (info, map) ->
