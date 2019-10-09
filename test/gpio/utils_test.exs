@@ -13,7 +13,7 @@ defmodule UtilsTest do
     assert Utils.to_key_label(:gpio12) == :gpio12
   end
 
-  test "build pinout map" do
+  test "expand map with value" do
     pinout_info = [
       [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
       [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"]
@@ -31,7 +31,7 @@ defmodule UtilsTest do
      {:pin_name, "GPIO32"}=> [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"]
     }
 
-    assert Map.equal?(pinout_map, Utils.pinout_map_definition(pinout_info)) == true
+    assert Map.equal?(pinout_map, Utils.expand_map_with_value(pinout_info)) == true
   end
 
 end

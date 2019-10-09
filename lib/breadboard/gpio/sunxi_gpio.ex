@@ -1,7 +1,10 @@
-defmodule Breadboard.GPIO.SunxiPinDefiner do
+defmodule Breadboard.GPIO.SunxiPin do
 
   @moduledoc false
 
+  use Breadboard.GPIO.BaseGPIOHelper
+
+  #  [sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12", pin: 3]
   @pinout_map %{
     3 => [pin_name: "PA12", mux2_label: "TWIO_SDA"],
     5 => [pin_name: "PA11"],
@@ -32,19 +35,10 @@ defmodule Breadboard.GPIO.SunxiPinDefiner do
     40 => [pin_name: "PG7"],
   }
 
-  def pin_definition() do
-    Breadboard.GPIO.Utils.build_pinout_map(@pinout_map, &update_pin/2)
-  end
+  def pinout_definition(), do: @pinout_map
 
-  # from: 3  => [pin_name: "PA12"]
-  # to:   [sysfs: 12, pin_key: :pin3, pin_label: :pa12, pin_name: "PA12", pin: 3]
-  defp update_pin({pin_number, info}, pins) do
-    pin_info =[sysfs: label_to_sysfs_pin(info[:pin_name])]
-    |> Keyword.merge(pin_key: Breadboard.GPIO.Utils.to_pin_key("pin", pin_number))
-    |> Keyword.merge(pin_label: Breadboard.GPIO.Utils.to_key_label(info[:pin_name]))
-    |> Keyword.merge(pin_name: info[:pin_name])
-    |> Keyword.merge(pin: pin_number)
-    [pin_info | pins]
+  def pin_to_sysfs_pin(_pin_number, info) do
+    label_to_sysfs_pin(info[:pin_name])
   end
 
   # https://linux-sunxi.org/GPIO
@@ -89,7 +83,7 @@ defmodule Breadboard.GPIO.SunxiGPIO do
   """
 
 
-  @pinout_map Breadboard.GPIO.SunxiPinDefiner.pin_definition()
+  @pinout_map Breadboard.GPIO.SunxiPin.build_pinout_map()
 
   use Breadboard.GPIO.BaseGPIO
 
