@@ -36,6 +36,17 @@ defmodule Breadboard.GPIO.BaseGPIOHelper do
   ```
 
   as requested from `Breadboard.GPIO.BaseGPIO` module
+
+
+  Note:
+
+  for values in the exended item the requested key/value pairs are used if present where:
+
+  * `:pin` value is forced to the original pin number
+  * `:pin_name` if missing is build as "GPIOn" (n='pin number')
+  * `:pin_key` if missing is build as :pinN (N='pin number)
+  * `:pin_label` if missing is build from 'pin name' as lowercase atom
+
   """
 
   @doc """
@@ -46,12 +57,12 @@ defmodule Breadboard.GPIO.BaseGPIOHelper do
   @doc """
   Return the the basic pinout definition map for all pins number.
 
-  The keys of the map are the real pin number and the value must contains at least the pin name in the form:
+  The keys of the map are the real pin number and the value must contains at least the pin number as key in the form:
   ```
   %{
     1 => [pin_name: "GPIO1"],
     ...
-    }
+   }
   ```
   """
   @callback pinout_definition() :: map()
@@ -68,11 +79,13 @@ defmodule Breadboard.GPIO.BaseGPIOHelper do
       end
 
       defp update_pin_info({pin_number, info}, pins) do
-        pin_info =[sysfs: pin_to_sysfs_pin(pin_number, info)]
-        |> Keyword.merge(pin_key: Breadboard.GPIO.Utils.to_pin_key("pin", pin_number))
-        |> Keyword.merge(pin_label: Breadboard.GPIO.Utils.to_key_label(info[:pin_name]))
-        |> Keyword.merge(pin_name: info[:pin_name])
-        |> Keyword.merge(pin: pin_number)
+        pin_name = Keyword.get(info, :pin_name, Breadboard.GPIO.Utils.to_pin_name("GPIO", pin_number))
+        pin_info = info
+        |> Keyword.put_new(:sysfs, pin_to_sysfs_pin(pin_number, info))
+        |> Keyword.put_new(:pin_key, Breadboard.GPIO.Utils.to_pin_key("pin", pin_number))
+        |> Keyword.put_new(:pin_label, Breadboard.GPIO.Utils.to_key_label(pin_name))
+        |> Keyword.put_new(:pin_name, pin_name)
+        |> Keyword.put(:pin, pin_number) # pin is unique as the original map pin_number
         [pin_info | pins]
       end
 

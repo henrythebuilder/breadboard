@@ -13,6 +13,12 @@ defmodule UtilsTest do
     assert Utils.to_key_label(:gpio12) == :gpio12
   end
 
+  test "To pin name" do
+    assert Utils.to_pin_name("GPIO", 12) == "GPIO12"
+    assert Utils.to_pin_name("PIN", 18) == "PIN18"
+    assert Utils.to_pin_name("gpio", 12) == "gpio12"
+  end
+
   test "expand map with value" do
     pinout_info = [
       [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
