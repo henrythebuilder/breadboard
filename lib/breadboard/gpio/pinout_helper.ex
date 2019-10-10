@@ -1,11 +1,11 @@
-defmodule Breadboard.GPIO.Utils do
+defmodule Breadboard.GPIO.PinoutHelper do
   @moduledoc false
 
   def to_pin_key(prefix, n) do
-    to_pin_name(prefix, n) |> to_key_label
+    to_pin_name(prefix, n) |> to_label_key
   end
 
-  def to_key_label(label) do
+  def to_label_key(label) do
     label |> to_string |> String.downcase |> String.to_atom
   end
 

@@ -7,6 +7,13 @@ defmodule PinoutServerTest do
     assert Process.whereis(PinoutServer.server_name() ) != nil
   end
 
+  test "server respond to :reload_state" do
+    pre_pid = Process.whereis(PinoutServer.server_name() )
+    GenServer.call(Breadboard.GPIO.PinoutServer.server_name(), {:reload_state})
+    post_pid = Process.whereis(PinoutServer.server_name() )
+    refute pre_pid != post_pid
+  end
+
   @tag platform_stub: true
   test "simple 'stub' call" do
     assert GenServer.call(PinoutServer.server_name(), {:label_to_pin, :gpio18}) == 18
