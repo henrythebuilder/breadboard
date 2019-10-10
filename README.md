@@ -29,9 +29,6 @@ Platform supported are:
 
 The platform is identified by the "`breadborad_platform`" variable checked in the app's environment, in the system environment and finally as default value (`stub`) in this order.
 
-### Used platform in Unit test
-In order to execute all the test for any platform single test module are run serially (`async: flase`) and the platform is set for any test by the API `Breadboard.set_platform`
-
 ## License
 
 Bradboard source code is released under Apache License 2.0.

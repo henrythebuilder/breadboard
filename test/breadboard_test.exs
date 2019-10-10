@@ -1,5 +1,5 @@
 defmodule BreadboardTest do
-  use ExUnit.Case, async: false
+  use ExUnit.Case
   doctest Breadboard
 
   # test "greets the world" do

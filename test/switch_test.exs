@@ -1,5 +1,5 @@
 defmodule SwitchTest do
-  use ExUnit.Case, async: false
+  use ExUnit.Case
 
   doctest Breadboard.Switch
 

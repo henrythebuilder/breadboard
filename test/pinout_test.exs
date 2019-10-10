@@ -1,5 +1,5 @@
 defmodule PinoutTest do
-  use ExUnit.Case, async: false
+  use ExUnit.Case
 
   doctest Breadboard.Pinout
 
