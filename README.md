@@ -4,7 +4,7 @@
 
 All started using `Circuits.GPIO` on an [OrangePi PC board](http://www.orangepi.org/orangepipc/), all work fine but use GPIOs is not simple beacause of the logical pin numeration.
 
-For example work on the pin 12 in the develop machine (without GPIOs) and in the OrangePi PC (pin label `PD14`) imply work in different way beacouse in the board may be open the `logical pin` 110 in the sysfs user space !
+For example work on the pin ***12*** in the develop machine (without GPIOs) and in the OrangePi PC (pin label `PD14`) imply work in different way because in the board may be open the `logical pin` ***110*** in the sysfs user space !
 
 Starting from here the idea to try to simplify the access to pinout information.
 
@@ -12,16 +12,16 @@ Starting from here the idea to try to simplify the access to pinout information.
 ## Manage the pinout map
 The module to manage the pinout information for the [supported platform](#supported-platform) is `Breadboard.Pinout`
 
-Any pin is identify by the `pin number`, a `pin key`, a `pin label` and the `pin name`
+Any pin is identify by the `pin number`, a `pin key`, a `pin label` and the `pin name`.
 
-As example the pin 12 can be referenced by the `pin number` or the `pin key`:
+As example the pin ***12*** can be referenced by the `pin number` or the `pin key`:
 
 ```
 Breadboard.Pinout.label_to_pin(12)
 Breadboard.Pinout.label_to_pin(:pin12)
 ```
 
-for any platform in a trasparent way, but the return value change from 12 to 110 according to the defined platform.
+for any platform in a trasparent way, but the return value change from ***12*** to ***110*** according to the defined platform.
 
 Same result can be obtained using the `pin name` or the `pin label` for the `stub` platform:
 ```
@@ -45,33 +45,54 @@ Breadboard.Pinout.pin_to_label(:pin12)
 
 produce the `:gpio12` or `:pd14` based on the configured platform.
 
+## Breadboard tools
 
-## Test environment
+### Pinout Mapping
+In order to semplify the integration of other platform pinout mapping two module are defined to expand the `Breadboard` library: `Breadboard.GPIO.BaseGPIO` and `Breadboard.GPIO.BaseGPIOHelper`.
+
+Module documentation explain also how GPIOs pinout mapping is made for a specific platform.
+
+### Play on GPIOs
+The first module develop to play on GPIOs is the `Breadboard.Switch` module.
+
+This module handle the feature of `Circuits.GPIO` to manage the operation on GPIOs with the support of `Breadboard.Pinout`:
+
+```
+iex> {:ok, switch} = Breadboard.Switch.connect([pin: :gpio18, direction: :output])
+iex> 18 = Breadboard.Switch.pin_number(switch)
+iex> Breadboard.Switch.turn_on(switch)
+iex> 1 = Breadboard.Switch.get_value(switch)
+```
+
+Check the `Breadboard.Switch` module documentation for more information.
+
+## Breadboarding Environment
 
 ### "stub" hardware abstraction layer
-`Circuits.GPIO` supports a "stub" hardware abstraction layer on platforms without GPIO support but as dependecy project this feature is disable on compilation. Setting MIX_ENV variable to 'test' during compilation is forced to 'prod' so test involving gpio fails to enable `stub` support.
+`Circuits.GPIO` supports a "stub" hardware abstraction layer on platforms without GPIO support but as dependecy project this feature is disable on compilation. Setting `MIX_ENV` variable to *test* during compilation is forced to *prod* so test involving gpio fails to enable "stub" support.
 
-At this time the only solution found on my *development pc* is to hack the makefile of `Circuits.GPIO` as [explained on GithHub](https://github.com/elixir-circuits/circuits_gpio/pull/61)
+At this time the only solution found on my *development pc* is to hack the makefile of `Circuits.GPIO` as [reported on GithHub](https://github.com/elixir-circuits/circuits_gpio/pull/61)
 
 ### Project Unit Test
-Sigle test are 'tagged' to execute, by default' only the test on the corrispondent platform.
+Specific platform test are 'tagged' in order to execute, by default, only the test on the corrispondent platform.
 
-Into the documentation, to enable the 'test filter' a check on the platform is performed to exclude inappropriate test on wrong platform.
+Into the module documentation a check on platform is performed to exclude inappropriate test on different platform.
 
-For more details the *project test files*
-
-
-## Environment variable
+More details in the *project test files* and the example explained in the *module documentation*.
 
 ### Supported Platform
+The platform is identified by the "`breadboard_platform`" environment variable as explained in the `Breadboard` module.
+
 This value is used to map the pins for the specific plaform.
 
 Platform supported are:
 
-* `stub` a "stub" hardware abstraction layer as defined in `Circuits.GPIO`
-* `sunxi` the family of ARM SoCs from Allwinner Technology
+* ***stub*** -> a "stub" hardware abstraction layer as defined in `Circuits.GPIO`
+* ***sunxi*** -> the family of ARM SoCs from Allwinner Technology
 
-The platform is identified by the "`breadboard_platform`" variable checked in the app's environment, in the system environment and finally as default value (`stub`) in this order.
+
+### Tested board
+- [***OrangePi PC board***](http://www.orangepi.org/orangepipc/)
 
 
 ## Installation

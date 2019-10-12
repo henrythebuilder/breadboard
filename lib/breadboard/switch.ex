@@ -1,8 +1,9 @@
 defmodule Breadboard.Switch do
 
   @moduledoc """
-  This module manage the 'switch' operation on gpio.
-  Any switch is supervised in the application
+  Manage the 'switch' operation on gpio.
+
+  Any *switch* is supervised in the application.
 
   ## Examples
 

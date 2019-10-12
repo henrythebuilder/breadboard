@@ -43,21 +43,16 @@ defmodule Breadboard.GPIO.BaseGPIOHelper do
   for values in the exended item the requested key/value pairs are used if present where:
 
   * `:pin` value is forced to the original pin number
-  * `:pin_name` if missing is build as "GPIOn" (n='pin number')
-  * `:pin_key` if missing is build as :pinN (N='pin number)
+  * `:pin_name` if missing is build as "GPIO***n***" (n='pin number')
+  * `:pin_key` if missing is build as :pin***n*** (n='pin number)
   * `:pin_label` if missing is build from 'pin name' as lowercase atom
 
   """
 
   @doc """
-  Return the the pin number in user space using sysfs
-  """
-  @callback pin_to_sysfs_pin(non_neg_integer(), list()) :: non_neg_integer()
+  Return the basic pinout definition map for all pins number to build the complete pinout map through `build_pinout_map`
 
-  @doc """
-  Return the the basic pinout definition map for all pins number.
-
-  The keys of the map are the real pin number and the value must contains at least the pin number as key in the form:
+  The keys of the map are the real pin number and the value (keyword list) must contains at least the pin name as key in the form:
   ```
   %{
     1 => [pin_name: "GPIO1"],
@@ -66,6 +61,15 @@ defmodule Breadboard.GPIO.BaseGPIOHelper do
   ```
   """
   @callback pinout_definition() :: map()
+
+  @doc """
+  Return the the pin number in user space using sysfs .
+
+  Argument come from the item from `pinout_definition`
+  - first argument: pin number
+  - second argument: available pin information
+  """
+  @callback pin_to_sysfs_pin(non_neg_integer(), list()) :: non_neg_integer()
 
   defmacro __using__(_opts) do
     quote do

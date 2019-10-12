@@ -11,7 +11,7 @@ end
 defmodule Breadboard.IRQ do
 
   @moduledoc """
-  A behaviour module for handle interrupts notification
+  A behaviour module to handle interrupts notification
   """
 
   @doc """

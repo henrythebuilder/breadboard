@@ -1,7 +1,7 @@
 defmodule Breadboard.Pinout do
 
   @moduledoc """
-  This module manage the pinout for the supported platform.
+  Manage the pinout for the supported platform.
 
   Note that accessing the GPIO pins through sysfs in some case (i.e. ARM SoCs family from Allwinner Technology) the pinout number/label may differ from real pin reference number.
 
