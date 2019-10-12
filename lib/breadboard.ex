@@ -31,12 +31,4 @@ defmodule Breadboard do
     Breadboard.ApplicationHelper.get_platform()
   end
 
-
-  @doc """
-  Get the `name` from `Circuits.GPIO.info/0`
-  """
-  def gpio_info_name() do
-     Breadboard.ApplicationHelper.gpio_info_name()
-  end
-
 end

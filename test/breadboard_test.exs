@@ -4,10 +4,7 @@ defmodule BreadboardTest do
 
   test "Get platform" do
     assert Breadboard.get_platform() != nil
-  end
-
-  test "Get GPIO info name" do
-    assert Breadboard.gpio_info_name() != nil
+    assert Breadboard.get_platform() != ""
   end
 
 end
