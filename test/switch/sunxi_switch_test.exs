@@ -9,7 +9,7 @@ defmodule SunxiSwitchTest do
     defmodule IRQSwitch do
       alias Breadboard.{Switch}
 
-      def interrupt_service_routine(irq_info = %IRQInfo{pin_number: pin_number, timestamp: timestamp, new_value: new_value, pin_label: pin_label}) do
+      def interrupt_service_routine(irq_info = %Breadboard.IRQInfo{pin_number: pin_number, timestamp: timestamp, new_value: new_value, pin_label: pin_label}) do
         # on interrupt turn on/off 'test pin' value
         IO.puts("irq info='#{inspect(irq_info)}")
         {:ok, switch_test} = Switch.connect([pin: :pa20, direction: :output])
