@@ -7,7 +7,6 @@ defmodule SunxiSwitchTest do
   test "Simple irq test with an external switch and interrupt: PA1 value is reflected to PA20 (a led)" do
 
     defmodule IRQSwitch do
-      use Breadboard.IRQ
       alias Breadboard.{Switch}
 
       def interrupt_service_routine(irq_info = %IRQInfo{pin_number: pin_number, timestamp: timestamp, new_value: new_value, pin_label: pin_label}) do
@@ -25,7 +24,7 @@ defmodule SunxiSwitchTest do
     end
 
     {:ok, switch_in} = Switch.connect([pin: :pa1, direction: :input])
-    :ok = Switch.set_interrupts(switch_in, [module: IRQSwitch, trigger: :both, opts: []])
+    :ok = Switch.set_interrupts(switch_in, [interrupts_receiver: &IRQSwitch.interrupt_service_routine/1, trigger: :both, opts: []])
     IO.puts("Press button on breadboard connected to pin PA1")
     IO.gets("Return to exit")
 

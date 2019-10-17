@@ -42,11 +42,11 @@ defmodule Breadboard.Switch.SwitchServerCmd do
     do_irq_call(interrupts_receiver, irq_info)
   end
 
-  defp do_irq_call(interrupts_receiver, irq_info) when is_atom(interrupts_receiver) do
-    apply(interrupts_receiver, :interrupt_service_routine, [irq_info])
+  defp do_irq_call(interrupts_receiver, irq_info) when is_function(interrupts_receiver, 1) do
+    interrupts_receiver.(irq_info)
   end
 
-  defp do_irq_call(interrupts_receiver, irq_info) when is_pid(interrupts_receiver) do
+  defp do_irq_call(interrupts_receiver, irq_info) do
     send(interrupts_receiver, {:irq_service_call, irq_info})
   end
 

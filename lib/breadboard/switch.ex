@@ -48,11 +48,10 @@ defmodule Breadboard.Switch do
       ...> end
       nil
 
-  ### Simple Interrupt test, by module:
+  ### Simple Interrupt test, by function:
       iex> if(Breadboard.get_platform()==:stub ) do # only for Unit Test purpose
       ...>   defmodule InterruptsTest do
-      ...>     use Breadboard.IRQ
-      ...>     def interrupt_service_routine(_irq_info) do
+      ...>     def interrupt_service_routine(_irq_info=%Breadboard.IRQInfo{}) do
       ...>       # on interrupt turn on 'test pin' value
       ...>       {:ok, switch_test} = Breadboard.Switch.connect([pin: :gpio3, direction: :output])
       ...>       Breadboard.Switch.turn_on(switch_test)
@@ -65,7 +64,7 @@ defmodule Breadboard.Switch do
       ...>   {:ok, switch_test} = Breadboard.Switch.connect([pin: :gpio3, direction: :output, initial_value: 0])
       ...>   # pin value is 0
       ...>   0 = Breadboard.Switch.get_value(switch_test)
-      ...>   :ok = Breadboard.Switch.set_interrupts(switch_in, [interrupts_receiver: InterruptsTest, trigger: :both, opts: []])
+      ...>   :ok = Breadboard.Switch.set_interrupts(switch_in, [interrupts_receiver: &InterruptsTest.interrupt_service_routine/1, trigger: :both, opts: []])
       ...>   Breadboard.Switch.turn_on(switch_out)
       ...>   Process.sleep(50)
       ...>   1 = Breadboard.Switch.get_value(switch_test)
@@ -167,11 +166,11 @@ defmodule Breadboard.Switch do
   * `irq_opts` - keyword list with:
     - `trigger` - as defined in Circuits.GPIO.set_interrupts
     - `opts` - as defined in Circuits.GPIO.set_interrupts
-    - `interrupts_receiver` - where notifications are sent: 'Module name' or PID
+    - `interrupts_receiver` - where notifications are sent: a *function* or a *receiver*
 
   *interrupts_receiver*:
-  * when Module: notifications are sent by required specific function signatures defined into `Breadboard.IRQ`
-  * when PID: notifications are sent by sending a message to the given PID in the form: `{:irq_service_call, %Breadboard.IRQInfo{}}`
+  * when *function*: notifications are sent invoking the specific function with a single argument: a struct of type `Breadboard.IRQInfo`
+  * when *receiver*: notifications are sent by sending a message to the given destination identified by *receiver* as defined in `Kernel.send/2` in the form: `{:irq_service_call, Breadboard.IRQInfo}`
 
   ## Return values
   `:ok` on success
