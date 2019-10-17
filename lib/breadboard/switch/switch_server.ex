@@ -67,9 +67,11 @@ defmodule Breadboard.Switch.SwitchServer do
   end
 
   def handle_info({:circuits_gpio, pin_number, timestamp, value}, state) do
-    SwitchServerCmd.irq_service_call(state.interrupts_module,
-                                     state.pin_label,
-                                     pin_number, timestamp, value)
+    irq_info = %Breadboard.IRQInfo{pin_number: pin_number,
+                                   timestamp: timestamp,
+                                   new_value: value,
+                                   pin_label: state.pin_label}
+    SwitchServerCmd.irq_service_call(state.interrupts_receiver, irq_info)
     {:noreply, state}
   end
 

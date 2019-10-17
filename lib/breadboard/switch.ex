@@ -48,7 +48,7 @@ defmodule Breadboard.Switch do
       ...> end
       nil
 
-  ### Simple Interrupt test:
+  ### Simple Interrupt test, by module:
       iex> if(Breadboard.get_platform()==:stub ) do # only for Unit Test purpose
       ...>   defmodule InterruptsTest do
       ...>     use Breadboard.IRQ
@@ -65,10 +65,32 @@ defmodule Breadboard.Switch do
       ...>   {:ok, switch_test} = Breadboard.Switch.connect([pin: :gpio3, direction: :output, initial_value: 0])
       ...>   # pin value is 0
       ...>   0 = Breadboard.Switch.get_value(switch_test)
-      ...>   :ok = Breadboard.Switch.set_interrupts(switch_in, [module: InterruptsTest, trigger: :both, opts: []])
+      ...>   :ok = Breadboard.Switch.set_interrupts(switch_in, [interrupts_receiver: InterruptsTest, trigger: :both, opts: []])
       ...>   Breadboard.Switch.turn_on(switch_out)
       ...>   Process.sleep(50)
       ...>   1 = Breadboard.Switch.get_value(switch_test)
+      ...>   nil
+      ...> end
+      nil
+
+  ### ... and by message:
+      iex> if(Breadboard.get_platform()==:stub ) do # only for Unit Test purpose
+      ...>   {:ok, switch_in} = Breadboard.Switch.connect([pin: :gpio1, direction: :input])
+      ...>   {:ok, switch_out} = Breadboard.Switch.connect([pin: :gpio1, direction: :output, initial_value: 0])
+      ...>   # pin value is 0
+      ...>   0 = Breadboard.Switch.get_value(switch_in)
+      ...>   :ok = Breadboard.Switch.set_interrupts(switch_in, [interrupts_receiver: self(), trigger: :rising, opts: []])
+      ...>   Breadboard.Switch.turn_on(switch_out)
+      ...>   receive do
+      ...>     {:irq_service_call, %Breadboard.IRQInfo{pin_number: 1, pin_label: :gpio1, new_value: 1}} ->
+      ...>       :ok
+      ...>     _bad_msg ->
+      ...>       raise(RuntimeError, "Unexpected message received")
+      ...>   after
+      ...>     1000 ->
+      ...>       raise(RuntimeError, "NO message received")
+      ...>   end
+      ...>   1 = Breadboard.Switch.get_value(switch_in)
       ...>   nil
       ...> end
       nil
@@ -145,7 +167,11 @@ defmodule Breadboard.Switch do
   * `irq_opts` - keyword list with:
     - `trigger` - as defined in Circuits.GPIO.set_interrupts
     - `opts` - as defined in Circuits.GPIO.set_interrupts
-    - `module` - module where notifications are sent by required specific function signatures defined into `Breadboard.IRQ`
+    - `interrupts_receiver` - where notifications are sent: 'Module name' or PID
+
+  *interrupts_receiver*:
+  * when Module: notifications are sent by required specific function signatures defined into `Breadboard.IRQ`
+  * when PID: notifications are sent by sending a message to the given PID in the form: `{:irq_service_call, %Breadboard.IRQInfo{}}`
 
   ## Return values
   `:ok` on success

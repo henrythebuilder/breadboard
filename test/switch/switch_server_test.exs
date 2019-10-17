@@ -58,11 +58,11 @@ defmodule SwitchServerTest do
   end
 
   @tag platform_stub: true
-  test "Manage pin interrupts (enable/disable)" do
+  test "Manage pin interrupts (enable/disable) by module" do
     {:ok, pid0} = SwitchServer.start_link([pin: :gpio1, direction: :input])
     {:ok, pid1} = SwitchServer.start_link([pin: :gpio1, direction: :output])
     {:ok, pid_test} = SwitchServer.start_link([pin: :gpio3, direction: :output, initial_value: 0])
-    :ok = GenServer.call(pid0, {:set_interrupts, [opts: [], module: InterruptsTest, trigger: :both]})
+    :ok = GenServer.call(pid0, {:set_interrupts, [opts: [], interrupts_receiver: InterruptsTest, trigger: :both]})
     GenServer.call(pid1, :turn_on)
     Process.sleep(10)
     assert 1 == GenServer.call(pid_test, :get_value)
@@ -73,5 +73,22 @@ defmodule SwitchServerTest do
     Process.sleep(10)
     assert 0 == GenServer.call(pid_test, :get_value)
   end
+
+  @tag platform_stub: true
+  test "Manage pin interrupts (enable/disable) by message" do
+    {:ok, pid0} = SwitchServer.start_link([pin: :gpio1, direction: :input])
+    {:ok, pid1} = SwitchServer.start_link([pin: :gpio1, direction: :output])
+    :ok = GenServer.call(pid0, {:set_interrupts, [opts: [], interrupts_receiver: self(), trigger: :both]})
+
+    # after calling set_interrupts, the calling process will receive an initial message with the state of the pin
+    assert_receive {:irq_service_call, %Breadboard.IRQInfo{new_value: 0, pin_label: :gpio1, pin_number: 1}}
+
+    GenServer.call(pid1, :turn_on)
+    assert_receive {:irq_service_call, %Breadboard.IRQInfo{new_value: 1, pin_label: :gpio1, pin_number: 1}}
+
+    GenServer.call(pid1, :turn_off)
+    assert_receive {:irq_service_call, %Breadboard.IRQInfo{new_value: 0, pin_label: :gpio1, pin_number: 1}}
+  end
+
 
 end

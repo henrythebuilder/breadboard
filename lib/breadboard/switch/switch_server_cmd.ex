@@ -31,19 +31,23 @@ defmodule Breadboard.Switch.SwitchServerCmd do
       Keyword.get(irq_opts, :opts, []))
     irq_state = case set_irq do
                   :ok ->
-                    %{interrupts_module: Keyword.get(irq_opts, :module, nil)}
+                    %{interrupts_receiver: Keyword.get(irq_opts, :interrupts_receiver, nil)}
                   _ ->
                     %{}
                 end
     {set_irq, irq_state}
   end
 
-  def irq_service_call(interrupts_module, pin_number, pin_label, timestamp, value) do
-    args = [%Breadboard.IRQInfo{pin_number: pin_number,
-                                timestamp: timestamp,
-                                new_value: value,
-                                pin_label: pin_label}]
-    apply(interrupts_module, :interrupt_service_routine, args)
+  def irq_service_call(interrupts_receiver, irq_info) do
+    do_irq_call(interrupts_receiver, irq_info)
+  end
+
+  defp do_irq_call(interrupts_receiver, irq_info) when is_atom(interrupts_receiver) do
+    apply(interrupts_receiver, :interrupt_service_routine, [irq_info])
+  end
+
+  defp do_irq_call(interrupts_receiver, irq_info) when is_pid(interrupts_receiver) do
+    send(interrupts_receiver, {:irq_service_call, irq_info})
   end
 
   def set_direction(gpio, switch_direction) do
