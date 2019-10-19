@@ -35,4 +35,11 @@ defmodule Breadboard.SwitchSupervisor do
     DynamicSupervisor.terminate_child(@me, pid)
   end
 
+  def which_switch() do
+    DynamicSupervisor.which_children(@me)
+    |> Enum.reduce([], fn ({_, pid, _, _}, acc) ->
+      [{pid, Breadboard.Switch.pin_label(pid)} | acc]
+    end)
+  end
+
 end
