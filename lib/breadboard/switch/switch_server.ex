@@ -29,6 +29,12 @@ defmodule Breadboard.Switch.SwitchServer do
      state}
   end
 
+  def handle_call(:pin_label, _from, state) do
+    {:reply,
+     state[:pin_label],
+     state}
+  end
+
   def handle_call({:set_value, value}, _from, state) do
     {:reply,
      SwitchServerCmd.set_value(state[:gpio], value),
