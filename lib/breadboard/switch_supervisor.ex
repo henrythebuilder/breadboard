@@ -1,4 +1,4 @@
-defmodule Breadboard.DynamicSupervisor do
+defmodule Breadboard.SwitchSupervisor do
 
   @moduledoc false
 
@@ -34,4 +34,5 @@ defmodule Breadboard.DynamicSupervisor do
   def stop_switch_server_child(pid) do
     DynamicSupervisor.terminate_child(@me, pid)
   end
+
 end

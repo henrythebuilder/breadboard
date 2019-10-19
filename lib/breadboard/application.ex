@@ -12,8 +12,8 @@ defmodule Breadboard.Application do
         start: {Breadboard.GPIO.PinoutServer, :start_link, []}
       },
       %{
-        id: Breadboard.DynamicSupervisor,
-        start: {Breadboard.DynamicSupervisor, :start_link, []}
+        id: Breadboard.SwitchSupervisor,
+        start: {Breadboard.SwitchSupervisor, :start_link, []}
       }
       # Starts a worker by calling: Breadboard.Worker.start_link(arg)
       # {Breadboard.Worker, arg}
