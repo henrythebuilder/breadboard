@@ -59,6 +59,8 @@ defmodule Breadboard.Switch.SwitchServerCmd do
   end
 
   def terminate(gpio) do
-    Circuits.GPIO.close(gpio)
+    close_gpio = Circuits.GPIO.close(gpio)
+    Logger.debug("SwitchServer close GPIO #{inspect(gpio)} with result: '#{inspect(close_gpio)}'")
+    close_gpio
   end
 end

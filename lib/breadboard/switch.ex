@@ -44,6 +44,8 @@ defmodule Breadboard.Switch do
       ...> Breadboard.Switch.get_value(switch1)
       ...> Breadboard.Switch.turn_on(switch0)
       ...> 1 = Breadboard.Switch.get_value(switch1)
+      ...> Breadboard.Switch.disconnect(switch0)
+      ...> Breadboard.Switch.disconnect(switch1)
       ...> nil
       ...> end
       nil
@@ -55,6 +57,7 @@ defmodule Breadboard.Switch do
       ...>       # on interrupt turn on 'test pin' value
       ...>       {:ok, switch_test} = Breadboard.Switch.connect([pin: :gpio3, direction: :output])
       ...>       Breadboard.Switch.turn_on(switch_test)
+      ...>       Breadboard.Switch.disconnect(switch_test)
       ...>     end
       ...>   end
       ...>   # open two pin as in and out ...
@@ -68,6 +71,9 @@ defmodule Breadboard.Switch do
       ...>   Breadboard.Switch.turn_on(switch_out)
       ...>   Process.sleep(50)
       ...>   1 = Breadboard.Switch.get_value(switch_test)
+      ...>   Breadboard.Switch.disconnect(switch_in)
+      ...>   Breadboard.Switch.disconnect(switch_out)
+      ...>   Breadboard.Switch.disconnect(switch_test)
       ...>   nil
       ...> end
       nil
