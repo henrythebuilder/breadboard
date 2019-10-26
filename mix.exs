@@ -1,8 +1,8 @@
 defmodule Breadboard.MixProject do
   use Mix.Project
 
-  @version "0.0.2"
-  @github_source_url ""
+  @version "0.0.3"
+  @github_source_url "https://github.com/henrythebuilder/breadboard"
   @homepage_url @github_source_url
 
   def project do

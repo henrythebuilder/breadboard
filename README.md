@@ -104,7 +104,7 @@ by adding `breadboard` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:breadboard, "~> 0.1.0"}
+    {:breadboard, "~> 0.0.3"}
   ]
 end
 ```
