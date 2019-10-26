@@ -4,3 +4,5 @@ defmodule SwitchTest do
   doctest Breadboard.Switch
 
 end
+
+# SPDX-License-Identifier: Apache-2.0

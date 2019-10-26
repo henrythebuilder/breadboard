@@ -3,7 +3,7 @@ defmodule Breadboard.Switch do
   @moduledoc """
   Manage the 'switch' operation on gpio.
 
-  Any *switch* is supervised in the application.
+  Any *switch* is supervised in the application, but if the *switch* (*child*) process crashed is never restarted.
 
   ## Examples
 
@@ -111,16 +111,16 @@ defmodule Breadboard.Switch do
 
   """
 
-  @typedoc "Switch value: 0/1 - as in Circuits.GPIO"
+  @typedoc "Switch value: 0/1 - as in `t:Circuits.GPIO.value/0`"
   @type value :: Circuits.GPIO.value()
 
-  @typedoc "The Switch direction (input or output) - as in Circuits.GPIO 'pin direction'"
+  @typedoc "The Switch direction (input or output) - as in `t:Circuits.GPIO.pin_direction/0`"
   @type switch_direction :: Circuits.GPIO.pin_direction()
 
-  @typedoc "Pull mode as defined in Circuits.GPIO"
+  @typedoc "Pull mode as defined in `t:Circuits.GPIO.pull_mode/0`"
   @type pull_mode :: Circuits.GPIO.pull_mode()
 
-  @typedoc "Options for connect/2"
+  @typedoc "Options for `Breadboard.Switch.connect/1`"
   @type connect_options :: {:pin, any()} | {:direction, switch_direction} | {:initial_value, value() | :not_set} | {:pull_mode, pull_mode()}
 
 
@@ -179,8 +179,8 @@ defmodule Breadboard.Switch do
 
   * `switch` - the switch
   * `irq_opts` - keyword list with:
-    - `trigger` - as defined in Circuits.GPIO.set_interrupts
-    - `opts` - as defined in Circuits.GPIO.set_interrupts
+    - `trigger` - as defined in `Circuits.GPIO.set_interrupts/3`
+    - `opts` - as defined in `Circuits.GPIO.set_interrupts/3`
     - `interrupts_receiver` - where notifications are sent: a *function* or a *receiver*
 
   *interrupts_receiver*:
@@ -247,3 +247,5 @@ defmodule Breadboard.Switch do
 
 
 end
+
+# SPDX-License-Identifier: Apache-2.0

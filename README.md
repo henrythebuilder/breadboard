@@ -93,6 +93,7 @@ Platform supported are:
 
 ### Tested board
 - [***OrangePi PC board***](http://www.orangepi.org/orangepipc/)
+- [***OrangePi PC2 board***](http://www.orangepi.org/orangepipc2/)
 
 
 ## Installation
@@ -112,15 +113,17 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/breadboard](https://hexdocs.pm/breadboard).
 
-## License
+## Author
 
-Copyright 2019 Enrico Rivarola
+Copyright © 2019 Enrico Rivarola
+
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+[https://spdx.org/licenses/Apache-2.0.html](https://spdx.org/licenses/Apache-2.0.html)
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -129,4 +132,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
- *Check [NOTICE](NOTICE) and [LICENSE](LICENSE) project files for more information.*
+---
+Note:
+
+Individual files contain the following tag instead of the full license text:
+
+`SPDX-License-Identifier: Apache-2.0`
+
+Use *SPDX short-form identifiers* enables machine reading/processing of software information as defined in [Software Package Data Exchange® (SPDX®)](https://spdx.org)
+
+
+*Check [NOTICE](NOTICE) and [LICENSE](LICENSE) project files for more information.*
+
+---
+
+
+SPDX-License-Identifier: Apache-2.0

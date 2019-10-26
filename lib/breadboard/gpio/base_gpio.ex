@@ -37,8 +37,10 @@ defmodule Breadboard.GPIO.BaseGPIO do
 
   and so on for any single pin to build the entire pinout map.
 
+  As *helper* to build the complete pinout map can bu used the `Breadboard.GPIO.BaseGPIOHelper`
 
-  Reference: `Breadboard.GPIO.StubHalGPIO`, `Breadboard.GPIO.SunxiGPIO`
+
+  Reference modules as example: `Breadboard.GPIO.StubHalGPIO`, `Breadboard.GPIO.SunxiGPIO`
   """
 
   @typedoc "Pin single information"
@@ -107,3 +109,5 @@ defmodule Breadboard.GPIO.BaseGPIO do
   end
 
 end
+
+# SPDX-License-Identifier: Apache-2.0

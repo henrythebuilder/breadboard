@@ -4,3 +4,5 @@ defmodule PinoutTest do
   doctest Breadboard.Pinout
 
 end
+
+# SPDX-License-Identifier: Apache-2.0

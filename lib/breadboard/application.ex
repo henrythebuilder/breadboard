@@ -25,3 +25,5 @@ defmodule Breadboard.Application do
     Supervisor.start_link(children, opts)
   end
 end
+
+# SPDX-License-Identifier: Apache-2.0

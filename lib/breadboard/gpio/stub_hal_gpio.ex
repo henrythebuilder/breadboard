@@ -67,3 +67,5 @@ defmodule Breadboard.GPIO.StubHalGPIO do
   def pinout_map(), do: @pinout_map
 
 end
+
+# SPDX-License-Identifier: Apache-2.0

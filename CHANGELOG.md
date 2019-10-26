@@ -1,5 +1,5 @@
 # Breadboard project Changelog
 
 ___
-## v0.1.0 (2019-..-..)
+## v0.0.2 (2019-10-26)
 * Initial version

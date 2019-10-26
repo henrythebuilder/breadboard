@@ -64,3 +64,5 @@ defmodule Breadboard.Switch.SwitchServerCmd do
     close_gpio
   end
 end
+
+# SPDX-License-Identifier: Apache-2.0

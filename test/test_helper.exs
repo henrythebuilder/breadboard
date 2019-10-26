@@ -23,3 +23,6 @@ end
 ExUnit.after_suite(&TestConfig.after_suite_callback/1)
 
 ExUnit.start([exclude: TestConfig.exclude_test()])
+
+
+# SPDX-License-Identifier: Apache-2.0

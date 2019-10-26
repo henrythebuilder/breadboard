@@ -41,3 +41,5 @@ defmodule Breadboard.GPIO.PinoutServer do
        platform: Breadboard.ApplicationHelper.get_platform()}
   end
 end
+
+# SPDX-License-Identifier: Apache-2.0

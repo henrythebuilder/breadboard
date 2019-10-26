@@ -1,7 +1,7 @@
 defmodule Breadboard.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.0.2"
   @github_source_url ""
   @homepage_url @github_source_url
 
@@ -72,3 +72,5 @@ defmodule Breadboard.MixProject do
   end
 
 end
+
+# SPDX-License-Identifier: Apache-2.0

@@ -7,3 +7,5 @@ defmodule Breadboard.IRQInfo do
 
   @type t :: %__MODULE__{pin_number: pos_integer(), timestamp: integer(), new_value: 0|1 , pin_label: :atom}
 end
+
+# SPDX-License-Identifier: Apache-2.0

@@ -5,7 +5,7 @@ defmodule Breadboard.Pinout do
 
   Note that accessing the GPIO pins through sysfs in some case (i.e. ARM SoCs family from Allwinner Technology) the pinout number/label may differ from real pin reference number.
 
-  The real pin number using 'Circuits.GPIO.info' 'name' key
+  The real pin number using `Circuits.GPIO.info/0` 'name' key
 
   """
 
@@ -14,7 +14,9 @@ defmodule Breadboard.Pinout do
 
   Returns the real pin number.
 
-  ## Example for Allwinner platform calling 'Breadboard.Pinout.label_to_pin' with "PG8", :pg8, 32 the value returne is always 200 (the real reference for sysfs number)
+  ## Example for Allwinner platform:
+
+  calling `Breadboard.Pinout.label_to_pin/1` with `"PG8"`, `:pg8` or `32` the value returne is always `200` (the real reference for sysfs number):
 
       iex> if(Breadboard.get_platform()==:sunxi ) do
       iex> 200 = Breadboard.Pinout.label_to_pin("PG8")
@@ -25,7 +27,7 @@ defmodule Breadboard.Pinout do
       iex> end
       nil
 
-  ## Examples (for the default 'stub' reference)
+  ## Examples for the default 'stub' reference:
 
       iex> if(Breadboard.get_platform()==:stub ) do
       iex> 18 = Breadboard.Pinout.label_to_pin("GPIO18")
@@ -65,3 +67,5 @@ defmodule Breadboard.Pinout do
   end
 
 end
+
+# SPDX-License-Identifier: Apache-2.0

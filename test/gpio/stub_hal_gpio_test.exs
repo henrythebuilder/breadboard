@@ -28,3 +28,5 @@ defmodule StubHalGPIOTest do
   end
 
 end
+
+# SPDX-License-Identifier: Apache-2.0
