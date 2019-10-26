@@ -42,4 +42,13 @@ defmodule Breadboard.SwitchSupervisor do
     end)
   end
 
+  def stop_all_switch_server_child() do
+    Logger.debug("Disconnecting all open Switch from Breadboard ...")
+    DynamicSupervisor.which_children(@me)
+    |> Enum.map(fn ({_, pid, _, _}) ->
+      stop_switch_server_child(pid)
+    end)
+    |> Enum.all?(fn(r) -> r==:ok end)
+  end
+
 end

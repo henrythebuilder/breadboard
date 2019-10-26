@@ -31,4 +31,11 @@ defmodule Breadboard do
     Breadboard.ApplicationHelper.get_platform()
   end
 
+  @doc """
+  Disconnect all the switch from Breadboard
+  """
+  def disconnect_all_gpios() do
+    Breadboard.SwitchSupervisor.stop_all_switch_server_child()
+  end
+
 end
