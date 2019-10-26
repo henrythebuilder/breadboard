@@ -18,6 +18,13 @@ defmodule Breadboard.MixProject do
       deps: deps(),
       docs: docs(),
       aliases: [docs: ["docs", &copy_extra/1]],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
+      test_coverage: [tool: ExCoveralls],
     ]
   end
 
@@ -30,12 +37,13 @@ defmodule Breadboard.MixProject do
   end
 
   def description() do
-    "An helper library for 'Elixir Circuits'"
+    "An helper library to 'breadboarding' with Elixir with a single-board computer using `Elixir Circuits`"
   end
 
   def package() do
     %{
-      licenses: ["Apache-2.0"],
+      licenses: ["Apache 2.0 (Check NOTICE and LICENSE project files for details)"],
+      maintainers: ["Enrico Rivarola <henrythebuilder@yahoo.it>"],
       files: ["lib",
               "mix.exs",
               "NOTICE",
@@ -43,7 +51,7 @@ defmodule Breadboard.MixProject do
               "CHANGELOG.md",
               "README.md",
               ".formatter.exs"],
-      links: %{"GitHub" => @github_source_url}
+      links: %{"GitHub" => @github_source_url},
     }
   end
 
@@ -52,8 +60,7 @@ defmodule Breadboard.MixProject do
     [
       {:circuits_gpio, "~> 0.4"},
       {:ex_doc, "~> 0.21.0", only: :docs, runtime: false},
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:excoveralls, "~> 0.12", only: [:test]},
     ]
   end
 
