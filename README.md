@@ -1,5 +1,8 @@
 # Breadboard
 
+[![Hex.pm](https://img.shields.io/hexpm/v/breadboard "Hex version")](https://hex.pm/packages/breadboard)
+![GitHub](https://img.shields.io/github/license/henrythebuilder/breadboard)
+
 `Breadboard` is an Elixir library developed to `breadboarding` with a single-board computer as simple as possible (this is the initial purpose).
 
 All started using `Circuits.GPIO` on an [OrangePi PC board](http://www.orangepi.org/orangepipc/), all work fine but use GPIOs is not simple beacause of the logical pin numeration.
