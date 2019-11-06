@@ -1,7 +1,7 @@
 defmodule Breadboard.MixProject do
   use Mix.Project
 
-  @version "0.0.3"
+  @version "0.0.4"
   @github_source_url "https://github.com/henrythebuilder/breadboard"
   @homepage_url @github_source_url
 
@@ -58,7 +58,7 @@ defmodule Breadboard.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:circuits_gpio, "~> 0.4"},
+      {:circuits_gpio, ">= 0.4.3"},
       {:ex_doc, "~> 0.21.0", only: :docs, runtime: false},
       {:excoveralls, "~> 0.12", only: [:test]},
     ]

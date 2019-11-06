@@ -69,9 +69,9 @@ Check the `Breadboard.Switch` module documentation for more information.
 ## Breadboarding Environment
 
 ### "stub" hardware abstraction layer
-`Circuits.GPIO` supports a "stub" hardware abstraction layer on platforms without GPIO support but as dependecy project this feature is disable on compilation. Setting `MIX_ENV` variable to *test* during compilation is forced to *prod* so test involving gpio fails to enable "stub" support.
+`Circuits.GPIO` supports a "stub" hardware abstraction layer on platforms without GPIO support but as dependecy project this feature may not be present.
 
-At this time the only solution found on my *development pc* is to hack the makefile of `Circuits.GPIO` as [reported on GithHub](https://github.com/elixir-circuits/circuits_gpio/pull/61)
+It's possible to enable the "stub" on Linux by setting `CIRCUITS_MIX_ENV` environment variable to `test`.
 
 ### Project Unit Test
 Specific platform test are 'tagged' in order to execute, by default, only the test on the corrispondent platform.
