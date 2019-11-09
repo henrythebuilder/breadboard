@@ -14,6 +14,10 @@ defmodule Breadboard.Application do
       %{
         id: Breadboard.SwitchSupervisor,
         start: {Breadboard.SwitchSupervisor, :start_link, []}
+      },
+      %{
+        id: Breadboard.JoystickSupervisor,
+        start: {Breadboard.JoystickSupervisor, :start_link, []}
       }
       # Starts a worker by calling: Breadboard.Worker.start_link(arg)
       # {Breadboard.Worker, arg}

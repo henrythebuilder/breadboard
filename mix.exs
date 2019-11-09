@@ -59,6 +59,8 @@ defmodule Breadboard.MixProject do
   defp deps do
     [
       {:circuits_gpio, ">= 0.4.3"},
+      {:circuits_i2c, "~> 0.3"},
+      {:ads1115, "~> 0.1"},
       {:ex_doc, "~> 0.21.0", only: :docs, runtime: false},
       {:excoveralls, "~> 0.12", only: [:test]},
     ]
