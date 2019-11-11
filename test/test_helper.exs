@@ -15,7 +15,7 @@ defmodule TestConfig do
   end
 
   def after_suite_callback(res) do
-    Breadboard.disconnect_all_gpios()
+    Breadboard.disconnect_all_components()
     IO.puts(inspect(res))
   end
 end

@@ -32,10 +32,10 @@ defmodule Breadboard do
   end
 
   @doc """
-  Disconnect all the switch from Breadboard
+  Disconnect all components from Breadboard
   """
-  def disconnect_all_gpios() do
-    Breadboard.SwitchSupervisor.stop_all_switch_server_child()
+  def disconnect_all_components() do
+    Breadboard.ComponentSupervisor.stop_all()
   end
 
 end
