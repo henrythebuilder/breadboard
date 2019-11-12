@@ -149,7 +149,6 @@ defmodule Breadboard.Switch do
   """
   @spec connect(connect_options()) :: {:ok, reference()} | {:error, atom()}
   def connect(options) do
-    Logger.debug("1.1")
     Breadboard.Supervisor.Switch.start_child(options)
   end
 
