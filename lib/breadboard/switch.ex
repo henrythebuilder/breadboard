@@ -23,12 +23,20 @@ defmodule Breadboard.Switch do
       iex> end
       nil
 
-  ### Pin/Label off the switch
+  ### Pin/Label of the switch
 
       iex> if(Breadboard.get_platform()==:stub ) do
       iex> {:ok, switch} = Breadboard.Switch.connect([pin: :gpio5, direction: :output])
       iex> 5 = Breadboard.Switch.pin_number(switch)
       iex> :gpio5 = Breadboard.Switch.pin_label(switch)
+      iex> nil
+      iex> end
+      nil
+
+      iex> if(Breadboard.get_platform()==:sunxi ) do
+      iex> {:ok, switch} = Breadboard.Switch.connect([pin: :pa6, direction: :input])
+      iex> 6 = Breadboard.Switch.pin_number(switch)
+      iex> :pa6 = Breadboard.Switch.pin_label(switch)
       iex> nil
       iex> end
       nil
@@ -124,6 +132,8 @@ defmodule Breadboard.Switch do
   @type connect_options :: {:pin, any()} | {:direction, switch_direction} | {:initial_value, value() | :not_set} | {:pull_mode, pull_mode()}
 
 
+  require Logger
+
   @doc """
   Connect to a GPIO pin.
 
@@ -139,6 +149,7 @@ defmodule Breadboard.Switch do
   """
   @spec connect(connect_options()) :: {:ok, reference()} | {:error, atom()}
   def connect(options) do
+    Logger.debug("1.1")
     Breadboard.ComponentSupervisor.start_switch_server_child(options)
   end
 
