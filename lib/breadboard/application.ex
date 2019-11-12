@@ -12,8 +12,12 @@ defmodule Breadboard.Application do
         start: {Breadboard.GPIO.PinoutServer, :start_link, []}
       },
       %{
-        id: Breadboard.ComponentSupervisor,
-        start: {Breadboard.ComponentSupervisor, :start_link, []}
+        id: Breadboard.Supervisor.Switch,
+        start: {Breadboard.Supervisor.Switch, :start_link, []}
+      },
+      %{
+        id: Breadboard.Supervisor.Joystick ,
+        start: {Breadboard.Supervisor.Joystick, :start_link, []}
       },
       # Starts a worker by calling: Breadboard.Worker.start_link(arg)
       # {Breadboard.Worker, arg}

@@ -35,7 +35,8 @@ defmodule Breadboard do
   Disconnect all components from Breadboard
   """
   def disconnect_all_components() do
-    Breadboard.ComponentSupervisor.stop_all()
+    Breadboard.Supervisor.Switch.stop_all_child()
+    Breadboard.Supervisor.Joystick.stop_all_child()
   end
 
 end

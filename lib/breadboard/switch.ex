@@ -150,7 +150,7 @@ defmodule Breadboard.Switch do
   @spec connect(connect_options()) :: {:ok, reference()} | {:error, atom()}
   def connect(options) do
     Logger.debug("1.1")
-    Breadboard.ComponentSupervisor.start_switch_server_child(options)
+    Breadboard.Supervisor.Switch.start_child(options)
   end
 
   @doc """
@@ -253,7 +253,7 @@ defmodule Breadboard.Switch do
   """
   @spec disconnect(reference()) :: :ok | {:error, :not_found}
   def disconnect(switch) do
-    Breadboard.ComponentSupervisor.stop_switch_server_child(switch)
+    Breadboard.Supervisor.Switch.stop_child(switch)
   end
 
 
