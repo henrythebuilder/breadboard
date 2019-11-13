@@ -1,5 +1,5 @@
 defmodule TestConfig do
-  @default_exclude [:integration_sunxi]
+  @default_exclude [:integration_sunxi_joystick, :integration_sunxi_switch]
 
   def exclude_test() do
     excl = @default_exclude

@@ -3,7 +3,7 @@ defmodule SunxiSwitchTest do
 
   alias Breadboard.{Switch}
 
-  @tag integration_sunxi: true
+  @tag integration_sunxi_switch: true
   test "Simple irq test with an external switch and interrupt: PA1 value is reflected to PA20 (a led)" do
 
     defmodule IRQSwitch do
