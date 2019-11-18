@@ -1,6 +1,9 @@
 # Breadboard project Changelog
 
 ___
+## v0.0.5 (2019-11-18)
+* Initial version of I2C integration with `Breadboard.Joystick` module
+
 ## v0.0.4 (2019-11-06)
 * Update 'circuits_gpio' dependencies to enable 'stub' on platforms without GPIO support
 

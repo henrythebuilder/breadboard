@@ -40,12 +40,12 @@ defmodule Breadboard.Joystick do
 
   Options:
 
-  * `:i2c_bus_name` - any valid 'pin labelbus name' valid for the platform in the form "i2c-n" where "n" is the bus number (as defined in `Circuits.I2C`).
-  * `:i2c_bus_addr` - address of the device, as defined in `Circuits.I2C`
-  * `:i2c_bus_gain` - range of the ADC scaling, as defined in `ADS1115`
-  * `:push_button_in` - Input Channel for 'push button'
-  * `:x_axis_in` - Input Channel for the measurement of the X axis
-  * `:y_axis_in` - Input Channel for the measurement of the Y axis
+  * `:i2c_bus_name` - any valid 'bus name' valid for the platform in the form "i2c-n" where "n" is the bus number (as defined in `Circuits.I2C`).
+  * `:i2c_bus_addr` - address of the device, as defined in `Circuits.I2C` (`0x48`)
+  * `:i2c_bus_gain` - range of the ADC scaling, as defined in `ADS1115` (`6144`)
+  * `:push_button_in` - Input Channel for 'push button' (`{:ain2, :gnd}`)
+  * `:x_axis_in` - Input Channel for the measurement of the X axis (`{:ain0, :gnd}`)
+  * `:y_axis_in` - Input Channel for the measurement of the Y axis (`{:ain1, :gnd}`)
 
   Return values:
   On success the function returns `{:ok, joystick}`, where `joystick` is the PID of the supervised 'Joystick'
@@ -61,9 +61,9 @@ defmodule Breadboard.Joystick do
 
   ## Examples
 
-      iex> {:ok, joystick} = Joystick.connect([i2c_bus_name: "i2c-0"])
+      > {:ok, joystick} = Joystick.connect([i2c_bus_name: "i2c-0"])
       {:ok, #PID<0.388.0>}
-      iex> Joystick.get_values(joystick)
+      > Joystick.get_values(joystick)
       [x_axis: 8940, y_axis: 8863, push_button: 17510]
 
   *any single value will be between -32,768 and 32,767*

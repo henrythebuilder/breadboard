@@ -69,6 +69,14 @@ iex> 1 = Breadboard.Switch.get_value(switch)
 
 Check the `Breadboard.Switch` module documentation for more information.
 
+### Play on I2C
+The first module develop to play with I2C interface is `Breadboard.Joystick`, a simple module to manage an analog joystick connected to an 'ADS1115' analog to digital converter.
+
+It is a very minimal module to test the I2C interface with `Circuits.I2C` and `ADS1115` library
+
+A simple integration is made by a dedicated test available in test suite with the specific tag `integration_sunxi_joystick`.
+
+
 ## Breadboarding Environment
 
 ### "stub" hardware abstraction layer
