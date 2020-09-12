@@ -1,11 +1,10 @@
-defmodule Breadboard.ApplicationHelper do
+defmodule Breadboard.Platform.Environment do
   @moduledoc false
 
   @platform_key :breadboard_platform
 
   def set_platform(new_platform) do
     Application.put_env(:breadboard, @platform_key, new_platform)
-    GenServer.call(Breadboard.GPIO.PinoutServer.server_name(), {:reload_state})
   end
 
   def get_platform() do

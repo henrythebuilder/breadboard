@@ -13,6 +13,14 @@ defmodule Breadboard do
   - ***stub*** -> hardware abstraction layer on platforms without GPIO support
   - ***sunxi***-> ARM SoCs family from Allwinner Technology
 
+  ### "Runtime Configuration" Application sample:
+
+      iex> Breadboard.set_platform(:stub)
+      iex> :stub = Breadboard.get_platform()
+      iex> Breadboard.set_platform(:sunxi)
+      iex> :sunxi = Breadboard.get_platform()
+      iex> nil
+
   """
 
   @doc """
@@ -20,14 +28,15 @@ defmodule Breadboard do
 
   """
   def set_platform(new_platform) do
-    Breadboard.ApplicationHelper.set_platform(new_platform)
+    Breadboard.Platform.Environment.set_platform(new_platform)
+    GenServer.call(Breadboard.GPIO.PinoutServer.server_name(), {:reload_state})
   end
 
   @doc """
   Get the current platform configured
   """
   def get_platform() do
-    Breadboard.ApplicationHelper.get_platform()
+    Breadboard.Platform.Environment.get_platform()
   end
 
   @doc """
