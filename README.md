@@ -109,24 +109,21 @@ Platform supported are:
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `breadboard` to your list of dependencies in `mix.exs`:
+The [breadboard package](https://hex.pm/packages/breadboard) can be installed by adding `breadboard` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:breadboard, "~> 0.0.3"}
+    {:breadboard, "~> 0.0.6"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/breadboard](https://hexdocs.pm/breadboard).
+Documentation is generated with [ExDoc](https://github.com/elixir-lang/ex_doc) and published on [HexDocs/breadboard](https://hexdocs.pm/breadboard).
 
 ## Author
 
-Copyright © 2019 Enrico Rivarola
+Copyright © 2020 Enrico Rivarola
 
 ## License
 

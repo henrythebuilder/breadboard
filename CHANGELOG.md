@@ -1,6 +1,9 @@
 # Breadboard project Changelog
 
 ___
+## v0.0.6 (2020-09-12)
+* Code Refactoring and minor fix
+
 ## v0.0.5 (2019-11-18)
 * Initial version of I2C integration with `Breadboard.Joystick` module
 

@@ -1,7 +1,7 @@
 defmodule Breadboard.MixProject do
   use Mix.Project
 
-  @version "0.0.5"
+  @version "0.0.6"
   @github_source_url "https://github.com/henrythebuilder/breadboard"
   @homepage_url @github_source_url
 
@@ -14,7 +14,7 @@ defmodule Breadboard.MixProject do
       description: description(),
       package: package(),
       source_url: @github_source_url,
-      # homepage_url: @homepage_url,
+      homepage_url: @homepage_url,
       deps: deps(),
       docs: docs(),
       aliases: [docs: ["docs", &copy_extra/1]],
