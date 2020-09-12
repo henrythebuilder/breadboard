@@ -121,11 +121,13 @@ end
 
 Documentation is generated with [ExDoc](https://github.com/elixir-lang/ex_doc) and published on [HexDocs/breadboard](https://hexdocs.pm/breadboard).
 
-## Author
+## Source code licensing rules
+
+### Author
 
 Copyright © 2020 Enrico Rivarola
 
-## License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -140,8 +142,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
----
-Note:
+### License identifier syntax
+
+The license described above applies to the `Breadboard` library source as a whole.
 
 Individual files contain the following tag instead of the full license text:
 
@@ -150,7 +153,7 @@ Individual files contain the following tag instead of the full license text:
 Use *SPDX short-form identifiers* enables machine reading/processing of software information as defined in [Software Package Data Exchange® (SPDX®)](https://spdx.org)
 
 
-*Check [NOTICE](NOTICE) and [LICENSE](LICENSE) project files for more information.*
+*Check [NOTICE](NOTICE) and [LICENSE](LICENSE) project files for more detailed information.*
 
 ---
 
