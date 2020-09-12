@@ -13,7 +13,6 @@ defmodule Breadboard.GPIO.PinoutCmd do
   def pin_to_label(platform, pin) do
     apply(@platform_pinout[platform], :pin_to_label, [pin])
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

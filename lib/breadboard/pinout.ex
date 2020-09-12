@@ -1,5 +1,4 @@
 defmodule Breadboard.Pinout do
-
   @moduledoc """
   Manage the pinout for the supported platform.
 
@@ -65,7 +64,6 @@ defmodule Breadboard.Pinout do
   def pin_to_label(pin) do
     GenServer.call(Breadboard.GPIO.PinoutServer.server_name(), {:pin_to_label, pin})
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

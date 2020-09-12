@@ -26,7 +26,6 @@ defmodule StubHalGPIOTest do
     assert StubHalGPIO.pin_to_label(40) == :gpio40
     assert StubHalGPIO.pin_to_label(63) == :gpio63
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

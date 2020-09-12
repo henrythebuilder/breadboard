@@ -1,5 +1,4 @@
 defmodule Breadboard.Joystick do
-
   @moduledoc """
   Manage the 'Joystick' using the I2C protocol
 
@@ -31,9 +30,13 @@ defmodule Breadboard.Joystick do
   """
 
   @typedoc "Options for `Breadboard.Joystick.connect/1`"
-  @type connect_options :: {:i2c_bus_name, any()} | {:i2c_bus_addr, Circuits.I2C.address()} |
-  {:i2c_bus_gain, ADS1115.Config.gain() } | {:push_button_in, ADS1115.Config.comparison()} |
-  {:x_axis_in, ADS1115.Config.comparison()} | {:y_axis_in, ADS1115.Config.comparison()}
+  @type connect_options ::
+          {:i2c_bus_name, any()}
+          | {:i2c_bus_addr, Circuits.I2C.address()}
+          | {:i2c_bus_gain, ADS1115.Config.gain()}
+          | {:push_button_in, ADS1115.Config.comparison()}
+          | {:x_axis_in, ADS1115.Config.comparison()}
+          | {:y_axis_in, ADS1115.Config.comparison()}
 
   @doc """
   Connect to a 'Joystick hardware'.
@@ -54,7 +57,6 @@ defmodule Breadboard.Joystick do
   def connect(options) do
     Breadboard.Supervisor.Joystick.start_child(options)
   end
-
 
   @doc """
   Read the current state values of a joystick
@@ -80,7 +82,6 @@ defmodule Breadboard.Joystick do
   def disconnect(joystick) do
     Breadboard.Supervisor.Joystick.stop_child(joystick)
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

@@ -1,5 +1,4 @@
 defmodule Breadboard.GPIO.BaseGPIOHelper do
-
   @moduledoc """
   Define an 'helper' behaviour to define a complete map of GPIOs pinout for a specific platform from a small set of informations.
 
@@ -73,7 +72,6 @@ defmodule Breadboard.GPIO.BaseGPIOHelper do
 
   defmacro __using__(_opts) do
     quote do
-
       @behaviour Breadboard.GPIO.BaseGPIOHelper
 
       alias Breadboard.GPIO.PinoutHelper
@@ -86,19 +84,20 @@ defmodule Breadboard.GPIO.BaseGPIOHelper do
 
       defp update_pin_info({pin_number, info}, pins) do
         pin_name = Keyword.get(info, :pin_name, PinoutHelper.to_pin_name("GPIO", pin_number))
-        pin_info = info
-        |> Keyword.put_new(:sysfs, pin_to_sysfs_pin(pin_number, info))
-        |> Keyword.put_new(:pin_key, PinoutHelper.to_pin_key("pin", pin_number))
-        |> Keyword.put_new(:pin_label, PinoutHelper.to_label_key(pin_name))
-        |> Keyword.put_new(:pin_name, pin_name)
-        |> Keyword.put(:pin, pin_number) # pin is unique as the original map pin_number
+
+        pin_info =
+          info
+          |> Keyword.put_new(:sysfs, pin_to_sysfs_pin(pin_number, info))
+          |> Keyword.put_new(:pin_key, PinoutHelper.to_pin_key("pin", pin_number))
+          |> Keyword.put_new(:pin_label, PinoutHelper.to_label_key(pin_name))
+          |> Keyword.put_new(:pin_name, pin_name)
+          # pin is unique as the original map pin_number
+          |> Keyword.put(:pin, pin_number)
+
         [pin_info | pins]
       end
-
     end
-
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

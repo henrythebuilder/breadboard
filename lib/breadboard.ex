@@ -1,5 +1,4 @@
 defmodule Breadboard do
-
   @moduledoc """
   Breadboard High Level API.
 
@@ -38,7 +37,6 @@ defmodule Breadboard do
     Breadboard.Supervisor.Switch.stop_all_child()
     Breadboard.Supervisor.Joystick.stop_all_child()
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

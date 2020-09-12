@@ -10,7 +10,8 @@ defmodule PinoutCmdTest do
     assert PinoutCmd.label_to_pin(:stub, :sysfs, 18) == 18
     assert PinoutCmd.label_to_pin(:sunxi, :sysfs, "PA1") == 1
     assert PinoutCmd.label_to_pin(:sunxi, :sysfs, :pa1) == 1
-    assert PinoutCmd.label_to_pin(:sunxi, :sysfs, 11) == 1   #PA1
+    # PA1
+    assert PinoutCmd.label_to_pin(:sunxi, :sysfs, 11) == 1
   end
 
   test "Obtain correct label from pin number" do
@@ -20,7 +21,6 @@ defmodule PinoutCmdTest do
     assert PinoutCmd.pin_to_label(:sunxi, :pin3) == :pa12
     assert PinoutCmd.pin_to_label(:sunxi, :pin38) == :pg6
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

@@ -1,5 +1,4 @@
 defmodule Breadboard.Switch.SwitchServerCmd do
-
   @moduledoc false
 
   require Logger
@@ -8,7 +7,14 @@ defmodule Breadboard.Switch.SwitchServerCmd do
 
   def open_gpio_pin(init_arg) do
     pin = Pinout.label_to_pin(init_arg[:pin])
-    open_gpio = Circuits.GPIO.open(pin, init_arg[:direction], Keyword.take(init_arg, [:initial_value, :pull_mode]) )
+
+    open_gpio =
+      Circuits.GPIO.open(
+        pin,
+        init_arg[:direction],
+        Keyword.take(init_arg, [:initial_value, :pull_mode])
+      )
+
     Logger.debug("SwitchServer open GPIO #{inspect(pin)} with result: '#{inspect(open_gpio)}'")
     open_gpio
   end
@@ -26,15 +32,22 @@ defmodule Breadboard.Switch.SwitchServerCmd do
   end
 
   def set_interrupts(gpio, irq_opts) do
-    set_irq = Circuits.GPIO.set_interrupts(gpio,
-      Keyword.get(irq_opts, :trigger, :both),
-      Keyword.get(irq_opts, :opts, []))
-    irq_state = case set_irq do
-                  :ok ->
-                    %{interrupts_receiver: Keyword.get(irq_opts, :interrupts_receiver, nil)}
-                  _ ->
-                    %{}
-                end
+    set_irq =
+      Circuits.GPIO.set_interrupts(
+        gpio,
+        Keyword.get(irq_opts, :trigger, :both),
+        Keyword.get(irq_opts, :opts, [])
+      )
+
+    irq_state =
+      case set_irq do
+        :ok ->
+          %{interrupts_receiver: Keyword.get(irq_opts, :interrupts_receiver, nil)}
+
+        _ ->
+          %{}
+      end
+
     {set_irq, irq_state}
   end
 

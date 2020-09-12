@@ -1,5 +1,4 @@
 defmodule Breadboard.Switch do
-
   @moduledoc """
   Manage the 'switch' operation on gpio.
 
@@ -129,8 +128,11 @@ defmodule Breadboard.Switch do
   @type pull_mode :: Circuits.GPIO.pull_mode()
 
   @typedoc "Options for `Breadboard.Switch.connect/1`"
-  @type connect_options :: {:pin, any()} | {:direction, switch_direction} | {:initial_value, value() | :not_set} | {:pull_mode, pull_mode()}
-
+  @type connect_options ::
+          {:pin, any()}
+          | {:direction, switch_direction}
+          | {:initial_value, value() | :not_set}
+          | {:pull_mode, pull_mode()}
 
   require Logger
 
@@ -246,7 +248,6 @@ defmodule Breadboard.Switch do
     GenServer.call(switch, {:set_pull_mode, pull_mode})
   end
 
-
   @doc """
   Disconnect the switch from the pin
   """
@@ -254,8 +255,6 @@ defmodule Breadboard.Switch do
   def disconnect(switch) do
     Breadboard.Supervisor.Switch.stop_child(switch)
   end
-
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

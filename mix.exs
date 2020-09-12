@@ -14,7 +14,7 @@ defmodule Breadboard.MixProject do
       description: description(),
       package: package(),
       source_url: @github_source_url,
-      #homepage_url: @homepage_url,
+      # homepage_url: @homepage_url,
       deps: deps(),
       docs: docs(),
       aliases: [docs: ["docs", &copy_extra/1]],
@@ -24,7 +24,7 @@ defmodule Breadboard.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test
       ],
-      test_coverage: [tool: ExCoveralls],
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -44,14 +44,16 @@ defmodule Breadboard.MixProject do
     %{
       licenses: ["Apache 2.0 (Check NOTICE and LICENSE project files for details)"],
       maintainers: ["Enrico Rivarola <henrythebuilder@yahoo.it>"],
-      files: ["lib",
-              "mix.exs",
-              "NOTICE",
-              "LICENSE",
-              "CHANGELOG.md",
-              "README.md",
-              ".formatter.exs"],
-      links: %{"GitHub" => @github_source_url},
+      files: [
+        "lib",
+        "mix.exs",
+        "NOTICE",
+        "LICENSE",
+        "CHANGELOG.md",
+        "README.md",
+        ".formatter.exs"
+      ],
+      links: %{"GitHub" => @github_source_url}
     }
   end
 
@@ -62,7 +64,7 @@ defmodule Breadboard.MixProject do
       {:circuits_i2c, "~> 0.3"},
       {:ads1115, "~> 0.1"},
       {:ex_doc, "~> 0.21.0", only: :docs, runtime: false},
-      {:excoveralls, "~> 0.12", only: [:test]},
+      {:excoveralls, "~> 0.12", only: [:test]}
     ]
   end
 
@@ -79,7 +81,6 @@ defmodule Breadboard.MixProject do
     File.cp("LICENSE", "doc/LICENSE")
     File.cp("NOTICE", "doc/NOTICE")
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

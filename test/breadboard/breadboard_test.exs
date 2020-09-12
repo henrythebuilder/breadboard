@@ -6,7 +6,6 @@ defmodule BreadboardTest do
     assert Breadboard.get_platform() != nil
     assert Breadboard.get_platform() != ""
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

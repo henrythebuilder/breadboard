@@ -1,12 +1,10 @@
 defmodule Breadboard.Supervisor.Base do
-
   @moduledoc false
 
   defmacro __using__(opts) do
     child_module = Keyword.get(opts, :child_module)
 
     quote do
-
       use DynamicSupervisor
 
       require Logger
@@ -28,9 +26,12 @@ defmodule Breadboard.Supervisor.Base do
       end
 
       def start_child(options) do
-        child_spec = %{ id: unquote(child_module),
-                        start: {unquote(child_module), :start_link, [options]},
-                        restart: :temporary }
+        child_spec = %{
+          id: unquote(child_module),
+          start: {unquote(child_module), :start_link, [options]},
+          restart: :temporary
+        }
+
         DynamicSupervisor.start_child(@me, child_spec)
       end
 
@@ -40,14 +41,13 @@ defmodule Breadboard.Supervisor.Base do
 
       def stop_all_child() do
         Logger.debug("Stop all child of '#{inspect(@me)}' from Breadboard ...")
+
         DynamicSupervisor.which_children(@me)
-        |> Enum.map(fn ({_, pid, _, _}) ->
+        |> Enum.map(fn {_, pid, _, _} ->
           DynamicSupervisor.terminate_child(@me, pid)
         end)
-        |> Enum.all?(fn(r) -> r==:ok end)
+        |> Enum.all?(fn r -> r == :ok end)
       end
-
     end
   end
-
 end

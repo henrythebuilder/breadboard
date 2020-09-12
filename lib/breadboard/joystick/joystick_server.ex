@@ -1,5 +1,4 @@
 defmodule Breadboard.Joystick.JoystickServer do
-
   @moduledoc false
 
   use GenServer
@@ -24,22 +23,23 @@ defmodule Breadboard.Joystick.JoystickServer do
     Process.flag(:trap_exit, true)
     Logger.debug("Init joystick with args: #{inspect(init_arg)}")
     state = make_init_state(init_arg)
-    Logger.debug("state = #{inspect state}")
+    Logger.debug("state = #{inspect(state)}")
     {:ok, state}
   end
 
   defp make_init_state(init_arg) do
-     state = %{ init_arg: init_arg,
-                i2c_bus_name: init_arg[:i2c_bus_name],
-                i2c_bus_addr: Keyword.get(init_arg, :i2c_bus_addr, @default_addr),
-                i2c_bus_gain: Keyword.get(init_arg, :i2c_bus_addr, @default_gain),
-                push_button_in: Keyword.get(init_arg, :push_button_in, @default_push_button_in),
-                x_axis_in: Keyword.get(init_arg, :x_axis_in, @default_x_in),
-                y_axis_in: Keyword.get(init_arg, :y_axis_in, @default_y_in),
-              }
+    state = %{
+      init_arg: init_arg,
+      i2c_bus_name: init_arg[:i2c_bus_name],
+      i2c_bus_addr: Keyword.get(init_arg, :i2c_bus_addr, @default_addr),
+      i2c_bus_gain: Keyword.get(init_arg, :i2c_bus_addr, @default_gain),
+      push_button_in: Keyword.get(init_arg, :push_button_in, @default_push_button_in),
+      x_axis_in: Keyword.get(init_arg, :x_axis_in, @default_x_in),
+      y_axis_in: Keyword.get(init_arg, :y_axis_in, @default_y_in)
+    }
 
-     conn = %{ i2c_ref: open_i2c_bus(state[:i2c_bus_name]) }
-     Map.merge( state, conn )
+    conn = %{i2c_ref: open_i2c_bus(state[:i2c_bus_name])}
+    Map.merge(state, conn)
   end
 
   defp open_i2c_bus(bus_name) do
@@ -48,17 +48,18 @@ defmodule Breadboard.Joystick.JoystickServer do
   end
 
   def handle_call(:get_values, _from, state) do
-    {:reply,
-     JoystickServerCmd.read_values(state),
-     state}
+    {:reply, JoystickServerCmd.read_values(state), state}
   end
 
   def terminate(reason, state) do
     JoystickServerCmd.terminate(state[:i2c_ref])
-    Logger.debug("JoystickServer terminate: reason='#{inspect(reason)}', state='#{inspect(state)}'")
+
+    Logger.debug(
+      "JoystickServer terminate: reason='#{inspect(reason)}', state='#{inspect(state)}'"
+    )
+
     state
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

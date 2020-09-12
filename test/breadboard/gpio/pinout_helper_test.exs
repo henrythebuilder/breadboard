@@ -24,22 +24,64 @@ defmodule PinoutHelperTest do
       [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
       [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"]
     ]
-    pinout_map =  %{
-     {:pin, 1}            => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
-     {:sysfs, 1}          => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
-     {:pin_key, :pin1}    => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
-     {:pin_label, :gpio1} => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
-     {:pin_name, "GPIO1"} => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
-     {:pin, 32}           => [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"],
-     {:sysfs, 32}         => [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"],
-     {:pin_key, :pin32}   => [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"],
-     {:pin_label, :gpio32}=> [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"],
-     {:pin_name, "GPIO32"}=> [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"]
+
+    pinout_map = %{
+      {:pin, 1} => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+      {:sysfs, 1} => [pin: 1, sysfs: 1, pin_key: :pin1, pin_label: :gpio1, pin_name: "GPIO1"],
+      {:pin_key, :pin1} => [
+        pin: 1,
+        sysfs: 1,
+        pin_key: :pin1,
+        pin_label: :gpio1,
+        pin_name: "GPIO1"
+      ],
+      {:pin_label, :gpio1} => [
+        pin: 1,
+        sysfs: 1,
+        pin_key: :pin1,
+        pin_label: :gpio1,
+        pin_name: "GPIO1"
+      ],
+      {:pin_name, "GPIO1"} => [
+        pin: 1,
+        sysfs: 1,
+        pin_key: :pin1,
+        pin_label: :gpio1,
+        pin_name: "GPIO1"
+      ],
+      {:pin, 32} => [pin: 32, sysfs: 32, pin_key: :pin32, pin_label: :gpio32, pin_name: "GPIO32"],
+      {:sysfs, 32} => [
+        pin: 32,
+        sysfs: 32,
+        pin_key: :pin32,
+        pin_label: :gpio32,
+        pin_name: "GPIO32"
+      ],
+      {:pin_key, :pin32} => [
+        pin: 32,
+        sysfs: 32,
+        pin_key: :pin32,
+        pin_label: :gpio32,
+        pin_name: "GPIO32"
+      ],
+      {:pin_label, :gpio32} => [
+        pin: 32,
+        sysfs: 32,
+        pin_key: :pin32,
+        pin_label: :gpio32,
+        pin_name: "GPIO32"
+      ],
+      {:pin_name, "GPIO32"} => [
+        pin: 32,
+        sysfs: 32,
+        pin_key: :pin32,
+        pin_label: :gpio32,
+        pin_name: "GPIO32"
+      ]
     }
 
     assert Map.equal?(pinout_map, PinoutHelper.expand_map_with_value(pinout_info)) == true
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

@@ -1,5 +1,4 @@
 defmodule Breadboard.GPIO.StubHalGPIOPin do
-
   @moduledoc false
 
   # pin item info:
@@ -15,21 +14,18 @@ defmodule Breadboard.GPIO.StubHalGPIOPin do
   #   63 => [pin_name: "GPIO63"]
   #  }
   def pinout_definition() do
-    (0..63)
-    |> Enum.reduce(%{}, fn (n, map) ->
-      Map.put(map, n, [pin_name: "GPIO#{n}"])
+    0..63
+    |> Enum.reduce(%{}, fn n, map ->
+      Map.put(map, n, pin_name: "GPIO#{n}")
     end)
   end
 
   def pin_to_sysfs_pin(pin_number, _info) do
     pin_number
   end
-
 end
 
-
 defmodule Breadboard.GPIO.StubHalGPIO do
-
   @moduledoc """
   Manage the pinout of gpio in "stub" hardware abstraction layer for platforms without GPIO support.
 
@@ -59,13 +55,11 @@ defmodule Breadboard.GPIO.StubHalGPIO do
   ```
   """
 
-
   @pinout_map Breadboard.GPIO.StubHalGPIOPin.build_pinout_map()
 
   use Breadboard.GPIO.BaseGPIO
 
   def pinout_map(), do: @pinout_map
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

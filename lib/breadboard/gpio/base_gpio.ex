@@ -1,5 +1,4 @@
 defmodule Breadboard.GPIO.BaseGPIO do
-
   @moduledoc """
   Define the behaviour to handle GPIOs pinout mapping for a specific platform.
 
@@ -44,7 +43,12 @@ defmodule Breadboard.GPIO.BaseGPIO do
   """
 
   @typedoc "Pin single information"
-  @type pinout_item_info :: {:pin, non_neg_integer()} | {:sysfs, non_neg_integer()} | {:pin_key, atom()} | {:pin_label, atom()} | {:pin_name, String.t()}
+  @type pinout_item_info ::
+          {:pin, non_neg_integer()}
+          | {:sysfs, non_neg_integer()}
+          | {:pin_key, atom()}
+          | {:pin_label, atom()}
+          | {:pin_name, String.t()}
 
   @typedoc "Complete Pinout information"
   @type pinout_item :: [pinout_item_info]
@@ -56,18 +60,18 @@ defmodule Breadboard.GPIO.BaseGPIO do
 
   defmacro __using__(_opts) do
     quote do
-
       @behaviour Breadboard.GPIO.BaseGPIO
 
       @after_compile __MODULE__
 
-      @doc"""
+      @doc """
       Get real pin reference from 'pinout label'.
 
       Returns the real pin number (default for `sysfs` user space)
       """
       def label_to_pin(label, mode \\ :sysfs)
       def label_to_pin(label, :stub), do: label_to_pin(label, :sysfs)
+
       def label_to_pin(label, mode) do
         search_pin(label, mode)
       end
@@ -82,32 +86,32 @@ defmodule Breadboard.GPIO.BaseGPIO do
       end
 
       defp search_pin(value, key) do
-        pin_info = Map.get(pinout_map(), {:pin_key, value}) ||
-          Map.get(pinout_map(), {:pin_label, value}) ||
-          Map.get(pinout_map(), {:pin, value}) ||
-          Map.get(pinout_map(), {:pin_name, value})
+        pin_info =
+          Map.get(pinout_map(), {:pin_key, value}) ||
+            Map.get(pinout_map(), {:pin_label, value}) ||
+            Map.get(pinout_map(), {:pin, value}) ||
+            Map.get(pinout_map(), {:pin_name, value})
 
         Keyword.get(pin_info, key)
       end
 
       defp check_pinout_map_definition() do
-        true = Enum.all?(pinout_map(),
-          fn {{key, val}, info} ->
-            keys = Keyword.keys(info)
-            Keyword.equal?( keys, [:sysfs, :pin_key, :pin_label, :pin_name, :pin])
-            ^val = Keyword.get(info, key, nil)
-          end
-        )
+        true =
+          Enum.all?(
+            pinout_map(),
+            fn {{key, val}, info} ->
+              keys = Keyword.keys(info)
+              Keyword.equal?(keys, [:sysfs, :pin_key, :pin_label, :pin_name, :pin])
+              ^val = Keyword.get(info, key, nil)
+            end
+          )
       end
 
       def __after_compile__(_env, _bytecode) do
         check_pinout_map_definition()
       end
-
     end
-
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

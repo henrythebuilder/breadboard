@@ -9,11 +9,16 @@ defmodule SunxiGpioTest do
     assert SunxiGPIO.label_to_pin(:pa1) == 1
     assert SunxiGPIO.label_to_pin(:pg8) == 200
     assert SunxiGPIO.label_to_pin(32) == 200
-    assert SunxiGPIO.label_to_pin(11) == 1   #PA1
-    assert SunxiGPIO.label_to_pin(15) == 3   #PA3
-    assert SunxiGPIO.label_to_pin(12) == 110 #PD14
-    assert SunxiGPIO.label_to_pin(40) == 199 #PG7
-    assert SunxiGPIO.label_to_pin(18) == 71  #PC7
+    # PA1
+    assert SunxiGPIO.label_to_pin(11) == 1
+    # PA3
+    assert SunxiGPIO.label_to_pin(15) == 3
+    # PD14
+    assert SunxiGPIO.label_to_pin(12) == 110
+    # PG7
+    assert SunxiGPIO.label_to_pin(40) == 199
+    # PC7
+    assert SunxiGPIO.label_to_pin(18) == 71
   end
 
   test "Obtain correct label from pin number for Allwinner specific chip" do
@@ -28,7 +33,6 @@ defmodule SunxiGpioTest do
     assert SunxiGPIO.pin_to_label(:pin37) == :pa20
     assert SunxiGPIO.pin_to_label(:pin7) == :pa6
   end
-
 end
 
 # SPDX-License-Identifier: Apache-2.0

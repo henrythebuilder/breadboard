@@ -1,5 +1,4 @@
 defmodule Breadboard.GPIO.SunxiPin do
-
   @moduledoc false
 
   use Breadboard.GPIO.BaseGPIOHelper
@@ -32,7 +31,7 @@ defmodule Breadboard.GPIO.SunxiPin do
     36 => [pin_name: "PG9"],
     37 => [pin_name: "PA20"],
     38 => [pin_name: "PG6"],
-    40 => [pin_name: "PG7"],
+    40 => [pin_name: "PG7"]
   }
 
   def pinout_definition(), do: @pinout_map
@@ -45,15 +44,12 @@ defmodule Breadboard.GPIO.SunxiPin do
   # To obtain the correct number you have to calculate it from the pin name (like PH18):
   # (position of letter in alphabet - 1) * 32 + pin number
   # E.g for PH18 this would be ( 8 - 1) * 32 + 18 = 224 + 18 = 242 (since 'h' is the 8th letter).
-  defp label_to_sysfs_pin(_label=<<"P", base::utf8, num::binary>>) do
+  defp label_to_sysfs_pin(_label = <<"P", base::utf8, num::binary>>) do
     (base - ?A) * 32 + String.to_integer(num)
   end
-
 end
 
-
 defmodule Breadboard.GPIO.SunxiGPIO do
-
   @moduledoc """
   Manage the pinout of GPIOs in **sunxi** hardware layer for platforms **ARM SoCs family from Allwinner Technology**.
 
@@ -82,13 +78,11 @@ defmodule Breadboard.GPIO.SunxiGPIO do
   ```
   """
 
-
   @pinout_map Breadboard.GPIO.SunxiPin.build_pinout_map()
 
   use Breadboard.GPIO.BaseGPIO
 
   def pinout_map(), do: @pinout_map
-
 end
 
 # SPDX-License-Identifier: Apache-2.0
