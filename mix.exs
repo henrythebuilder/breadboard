@@ -1,7 +1,7 @@
 defmodule Breadboard.MixProject do
   use Mix.Project
 
-  @version "0.0.6"
+  @version "0.0.7"
   @github_source_url "https://github.com/henrythebuilder/breadboard"
   @homepage_url @github_source_url
 
@@ -63,7 +63,7 @@ defmodule Breadboard.MixProject do
       {:circuits_gpio, ">= 0.4.3"},
       {:circuits_i2c, "~> 0.3"},
       {:ads1115, "~> 0.1"},
-      {:ex_doc, "~> 0.21.0", only: :docs, runtime: false},
+      {:ex_doc, "~> 0.22", only: :docs, runtime: false},
       {:excoveralls, "~> 0.12", only: [:test]}
     ]
   end
@@ -71,7 +71,7 @@ defmodule Breadboard.MixProject do
   defp docs() do
     [
       main: "readme",
-      extras: ["README.md", "CHANGELOG.md"],
+      extras: ["README.md", "CHANGELOG.md", "LICENSE", "NOTICE"],
       source_ref: "v#{@version}",
       source_url: @github_source_url
     ]

@@ -1,6 +1,10 @@
 # Breadboard project Changelog
 
 ___
+## v0.0.7 (2020-09-13)
+* Fix project documentation
+* Hex package NOT publish on [hex.pm](https://hex.pm)
+
 ## v0.0.6 (2020-09-12)
 * Code Refactoring and minor fix
 * Hex package NOT publish on [hex.pm](https://hex.pm)
