@@ -1,7 +1,7 @@
 defmodule Breadboard.MixProject do
   use Mix.Project
 
-  @version "0.0.7"
+  @version "0.0.8"
   @github_source_url "https://github.com/henrythebuilder/breadboard"
   @homepage_url @github_source_url
 
@@ -9,7 +9,7 @@ defmodule Breadboard.MixProject do
     [
       app: :breadboard,
       version: @version,
-      elixir: "~> 1.9",
+      elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
