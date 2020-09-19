@@ -15,10 +15,12 @@ defmodule Breadboard do
 
   ### "Runtime Configuration" Application sample:
 
+      iex> current_platform = Breadboard.get_platform()
       iex> Breadboard.set_platform(:stub)
       iex> :stub = Breadboard.get_platform()
       iex> Breadboard.set_platform(:sunxi)
       iex> :sunxi = Breadboard.get_platform()
+      iex> Breadboard.set_platform(current_platform)
       iex> nil
 
   """
