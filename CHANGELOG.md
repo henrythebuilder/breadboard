@@ -1,6 +1,10 @@
 # Breadboard project Changelog
 
 ___
+## v0.0.9 (2020-09-23)
+* Dialyzer fix
+* Hex package NOT publish on [hex.pm](https://hex.pm)
+
 ## v0.0.8 (2020-09-19)
 * Minor test fix
 * Hex package NOT publish on [hex.pm](https://hex.pm)
