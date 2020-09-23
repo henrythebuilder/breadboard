@@ -70,7 +70,7 @@ defmodule Breadboard.Joystick do
 
   *any single value will be between -32,768 and 32,767*
   """
-  @spec get_values(reference()) :: nonempty_list(any())
+  @spec get_values(GenServer.server()) :: nonempty_list(any())
   def get_values(joystick) do
     GenServer.call(joystick, :get_values)
   end
@@ -78,7 +78,7 @@ defmodule Breadboard.Joystick do
   @doc """
   Disconnect the joystick from the 'breadboard'
   """
-  @spec disconnect(reference()) :: :ok | {:error, :not_found}
+  @spec disconnect(GenServer.server()) :: :ok | {:error, :not_found}
   def disconnect(joystick) do
     Breadboard.Supervisor.Joystick.stop_child(joystick)
   end

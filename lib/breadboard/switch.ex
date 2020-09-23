@@ -157,7 +157,7 @@ defmodule Breadboard.Switch do
   @doc """
   Set the value 1 of a switch (only for `:output` switch)
   """
-  @spec turn_on(reference()) :: :ok
+  @spec turn_on(GenServer.server()) :: :ok
   def turn_on(switch) do
     GenServer.call(switch, :turn_on)
   end
@@ -165,7 +165,7 @@ defmodule Breadboard.Switch do
   @doc """
   Set the value 0 of a switch (only for `:output` switch)
   """
-  @spec turn_off(reference()) :: :ok
+  @spec turn_off(GenServer.server()) :: :ok
   def turn_off(switch) do
     GenServer.call(switch, :turn_off)
   end
@@ -173,7 +173,7 @@ defmodule Breadboard.Switch do
   @doc """
   Read the current value of a switch
   """
-  @spec get_value(reference()) :: value()
+  @spec get_value(GenServer.server()) :: value()
   def get_value(switch) do
     GenServer.call(switch, :get_value)
   end
@@ -181,7 +181,7 @@ defmodule Breadboard.Switch do
   @doc """
   Set the value for a switch (only for `:output` switch)
   """
-  @spec set_value(reference(), value()) :: :ok
+  @spec set_value(GenServer.server(), value()) :: :ok
   def set_value(switch, value) do
     GenServer.call(switch, {:set_value, value})
   end
@@ -202,7 +202,7 @@ defmodule Breadboard.Switch do
   ## Return values
   `:ok` on success
   """
-  @spec set_interrupts(reference(), list()) :: :ok | {:error, atom()}
+  @spec set_interrupts(GenServer.server(), list()) :: :ok | {:error, atom()}
   def set_interrupts(switch, irq_opts) do
     GenServer.call(switch, {:set_interrupts, irq_opts})
   end
@@ -210,7 +210,7 @@ defmodule Breadboard.Switch do
   @doc """
   Get the Switch pin number
   """
-  @spec pin_number(reference()) :: non_neg_integer()
+  @spec pin_number(GenServer.server()) :: non_neg_integer()
   def pin_number(switch) do
     GenServer.call(switch, :pin_number)
   end
@@ -218,7 +218,7 @@ defmodule Breadboard.Switch do
   @doc """
   Get the Switch pin label
   """
-  @spec pin_label(reference()) :: atom()
+  @spec pin_label(GenServer.server()) :: atom()
   def pin_label(switch) do
     GenServer.call(switch, :pin_label)
   end
@@ -226,7 +226,7 @@ defmodule Breadboard.Switch do
   @doc """
   Change the direction of the Switch
   """
-  @spec set_direction(reference(), switch_direction()) :: :ok | {:error, atom()}
+  @spec set_direction(GenServer.server(), switch_direction()) :: :ok | {:error, atom()}
   def set_direction(switch, switch_direction) do
     GenServer.call(switch, {:set_direction, switch_direction})
   end
@@ -243,7 +243,7 @@ defmodule Breadboard.Switch do
       nil
 
   """
-  @spec set_pull_mode(reference(), pull_mode()) :: :ok | {:error, atom()}
+  @spec set_pull_mode(GenServer.server(), pull_mode()) :: :ok | {:error, atom()}
   def set_pull_mode(switch, pull_mode) do
     GenServer.call(switch, {:set_pull_mode, pull_mode})
   end
@@ -251,7 +251,7 @@ defmodule Breadboard.Switch do
   @doc """
   Disconnect the switch from the pin
   """
-  @spec disconnect(reference()) :: :ok | {:error, :not_found}
+  @spec disconnect(GenServer.server()) :: :ok | {:error, :not_found}
   def disconnect(switch) do
     Breadboard.Supervisor.Switch.stop_child(switch)
   end

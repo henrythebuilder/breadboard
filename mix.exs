@@ -1,7 +1,7 @@
 defmodule Breadboard.MixProject do
   use Mix.Project
 
-  @version "0.0.8"
+  @version "0.0.9"
   @github_source_url "https://github.com/henrythebuilder/breadboard"
   @homepage_url @github_source_url
 
@@ -64,7 +64,8 @@ defmodule Breadboard.MixProject do
       {:circuits_i2c, "~> 0.3"},
       {:ads1115, "~> 0.1"},
       {:ex_doc, "~> 0.22", only: :docs, runtime: false},
-      {:excoveralls, "~> 0.12", only: [:test]}
+      {:excoveralls, "~> 0.12", only: [:test]},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
   end
 
