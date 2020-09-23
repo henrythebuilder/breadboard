@@ -44,8 +44,8 @@ defmodule Breadboard.GPIO.BaseGPIO do
 
   @typedoc "Pin single information"
   @type pinout_item_info ::
-          {:pin, non_neg_integer()}
-          | {:sysfs, non_neg_integer()}
+          {:pin, byte()}
+          | {:sysfs, byte()}
           | {:pin_key, atom()}
           | {:pin_label, atom()}
           | {:pin_name, String.t()}
@@ -56,7 +56,7 @@ defmodule Breadboard.GPIO.BaseGPIO do
   @doc """
   Return the complete pinout map for a specific platform
   """
-  @callback pinout_map() :: [pinout_item()]
+  @callback pinout_map() :: %{pinout_item_info => pinout_item()}
 
   defmacro __using__(_opts) do
     quote do
@@ -96,12 +96,14 @@ defmodule Breadboard.GPIO.BaseGPIO do
       end
 
       defp check_pinout_map_definition() do
+        ref_info_keys = [:sysfs, :pin_key, :pin_label, :pin_name, :pin]
+
         true =
           Enum.all?(
             pinout_map(),
             fn {{key, val}, info} ->
               keys = Keyword.keys(info)
-              Keyword.equal?(keys, [:sysfs, :pin_key, :pin_label, :pin_name, :pin])
+              [] = ref_info_keys -- keys
               ^val = Keyword.get(info, key, nil)
             end
           )
